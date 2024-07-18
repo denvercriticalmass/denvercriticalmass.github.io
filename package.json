@@ -1,0 +1,14 @@
+{
+  "name": "denvercriticalmass.github.io",
+  "module": "index.ts",
+  "type": "module",
+  "devDependencies": {
+    "@types/bun": "latest",
+    "live-server": "^1.2.2",
+    "prettier": "^3.3.3",
+    "tailwindcss": "^3.4.6"
+  },
+  "peerDependencies": {
+    "typescript": "^5.0.0"
+  }
+}
