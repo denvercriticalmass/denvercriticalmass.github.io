@@ -4,11 +4,16 @@
   "type": "module",
   "devDependencies": {
     "@types/bun": "latest",
-    "live-server": "^1.2.2",
+    "autoprefixer": "^10.4.19",
+    "postcss": "^8.4.40",
     "prettier": "^3.3.3",
-    "tailwindcss": "^3.4.6"
+    "tailwindcss": "^3.4.7",
+    "vite": "^5.3.5"
   },
   "peerDependencies": {
     "typescript": "^5.0.0"
+  },
+  "scripts": {
+    "dev": "vite"
   }
 }
