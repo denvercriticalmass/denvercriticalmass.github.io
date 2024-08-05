@@ -39,7 +39,7 @@
         if ((!ordinal) in this.#suffixes)
           throw new Error(`Unexpected ordinal ${ordinal}`);
         const suffix = this.#suffixes[ordinal];
-        return `${x}${suffix}`;
+        return `${x}<sup>${suffix}</sup>`;
       }
     }
 
