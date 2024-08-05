@@ -15,6 +15,7 @@
     "typescript": "^5.0.0"
   },
   "scripts": {
+    "start": "vite",
     "dev": "vite",
     "build": "vite build"
   }
