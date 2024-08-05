@@ -10,8 +10,8 @@ export default defineConfig({
     emptyOutDir: true,
     rollupOptions: {
       input: {
-        main: resolve(__dirname, "index.html"),
-        legal: resolve(__dirname, "legal/index.html"),
+        main: resolve(__dirname, "./src/index.html"),
+        legal: resolve(__dirname, "./src/legal/index.html"),
       },
     },
   },
