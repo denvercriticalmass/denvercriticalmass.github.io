@@ -1,7 +1,7 @@
 // vite.config.js
+import tailwindcss from "@tailwindcss/vite";
 import { resolve } from "path";
 import { defineConfig } from "vite";
-import compress from "vite-plugin-compress";
 
 export default defineConfig({
   root: "src",
@@ -15,5 +15,5 @@ export default defineConfig({
       },
     },
   },
-  plugins: [compress],
+  plugins: [tailwindcss()],
 });
