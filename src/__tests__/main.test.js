@@ -7,8 +7,8 @@ import { fileURLToPath } from 'url';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-// Load and execute the main.js file
-const mainJsPath = path.join(__dirname, 'main.js');
+// Load and execute the main.js file from public directory
+const mainJsPath = path.join(__dirname, '../public/main.js');
 const mainJsCode = fs.readFileSync(mainJsPath, 'utf-8');
 
 // Create a module context and execute
