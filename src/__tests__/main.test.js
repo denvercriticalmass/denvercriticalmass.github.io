@@ -280,6 +280,30 @@ describe('DenverCriticalMass', () => {
       expect(aprilTimes.dayName).toBe('Friday');
       expect(aprilTimes.meetTime).toBe('6:30pm');
     });
+
+    it('should correctly transition from December (Sunday) to January (Sunday) with year rollover', () => {
+      // Last Sunday of December 2025 is Dec 28
+      const decemberEvent = DenverCriticalMass.getLastTargetDayOfMonth(new Date(2025, 11, 1));
+      expect(decemberEvent.getMonth()).toBe(11); // December
+      expect(decemberEvent.getDate()).toBe(28);
+      expect(decemberEvent.getDay()).toBe(0); // Sunday
+      expect(decemberEvent.getFullYear()).toBe(2025);
+
+      const decemberTimes = DenverCriticalMass.getEventTimes(decemberEvent.getMonth());
+      expect(decemberTimes.dayName).toBe('Sunday');
+      expect(decemberTimes.meetTime).toBe('1:30pm');
+
+      // After December 28, 2025, should roll to last Sunday of January 2026
+      const januaryEvent = DenverCriticalMass.getLastTargetDayOfMonth(new Date(2026, 0, 1));
+      expect(januaryEvent.getMonth()).toBe(0); // January
+      expect(januaryEvent.getDate()).toBe(25);
+      expect(januaryEvent.getDay()).toBe(0); // Sunday
+      expect(januaryEvent.getFullYear()).toBe(2026); // Year should increment
+
+      const januaryTimes = DenverCriticalMass.getEventTimes(januaryEvent.getMonth());
+      expect(januaryTimes.dayName).toBe('Sunday');
+      expect(januaryTimes.meetTime).toBe('1:30pm');
+    });
   });
 });
 
