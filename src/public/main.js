@@ -102,7 +102,7 @@ const DenverCriticalMass = (() => {
     // Show winter hours announcement only during winter season
     if (winterHoursEl) {
       if (isWinterSeason(targetMonth)) {
-        winterHoursEl.innerHTML = "❄️ Winter Hours ❄️";
+        winterHoursEl.innerHTML = "❄️ Winter Hours ⛄";
       } else {
         winterHoursEl.innerHTML = "";
       }
