@@ -78,6 +78,7 @@ const DenverCriticalMass = (() => {
     const dayNameEl = document.querySelector("[data-day-name]");
     const meetTimeEl = document.querySelector("[data-meet-time]");
     const rideTimeEl = document.querySelector("[data-ride-time]");
+    const winterHoursEl = document.querySelector("[data-winter-hours]");
 
     if (!monthEl || !dayEl || !yearEl || !dayNameEl || !meetTimeEl || !rideTimeEl) {
       console.error("Required DOM elements not found");
@@ -97,6 +98,15 @@ const DenverCriticalMass = (() => {
     dayNameEl.innerHTML = times.dayName;
     meetTimeEl.innerHTML = times.meetTime;
     rideTimeEl.innerHTML = times.rideTime;
+
+    // Show winter hours announcement only during winter season
+    if (winterHoursEl) {
+      if (isWinterSeason(targetMonth)) {
+        winterHoursEl.innerHTML = "❄️ Winter Hours ❄️";
+      } else {
+        winterHoursEl.innerHTML = "";
+      }
+    }
   };
 
   return {
