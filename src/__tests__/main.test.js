@@ -23,7 +23,7 @@ const DenverCriticalMass = module.exports;
 
 describe('DenverCriticalMass', () => {
   describe('formatDate', () => {
-    it('should format a date correctly', () => {
+    it('formats a date correctly', () => {
       const date = new Date(2025, 9, 31); // October 31, 2025
       const result = DenverCriticalMass.formatDate(date);
 
@@ -32,7 +32,7 @@ describe('DenverCriticalMass', () => {
       expect(result.year).toBe(2025);
     });
 
-    it('should format a winter date correctly', () => {
+    it('formats a winter date correctly', () => {
       const date = new Date(2025, 0, 15); // January 15, 2025
       const result = DenverCriticalMass.formatDate(date);
 
@@ -43,23 +43,23 @@ describe('DenverCriticalMass', () => {
   });
 
   describe('getOrdinalSuffix', () => {
-    it('should return "st" for 1, 21, 31', () => {
+    it('returns "st" for 1, 21, 31', () => {
       expect(DenverCriticalMass.getOrdinalSuffix(1)).toBe('st');
       expect(DenverCriticalMass.getOrdinalSuffix(21)).toBe('st');
       expect(DenverCriticalMass.getOrdinalSuffix(31)).toBe('st');
     });
 
-    it('should return "nd" for 2, 22', () => {
+    it('returns "nd" for 2, 22', () => {
       expect(DenverCriticalMass.getOrdinalSuffix(2)).toBe('nd');
       expect(DenverCriticalMass.getOrdinalSuffix(22)).toBe('nd');
     });
 
-    it('should return "rd" for 3, 23', () => {
+    it('returns "rd" for 3, 23', () => {
       expect(DenverCriticalMass.getOrdinalSuffix(3)).toBe('rd');
       expect(DenverCriticalMass.getOrdinalSuffix(23)).toBe('rd');
     });
 
-    it('should return "th" for 4-20 and others', () => {
+    it('returns "th" for 4-20 and others', () => {
       expect(DenverCriticalMass.getOrdinalSuffix(4)).toBe('th');
       expect(DenverCriticalMass.getOrdinalSuffix(11)).toBe('th');
       expect(DenverCriticalMass.getOrdinalSuffix(12)).toBe('th');
@@ -69,7 +69,7 @@ describe('DenverCriticalMass', () => {
   });
 
   describe('formatDayWithOrdinal', () => {
-    it('should format day with correct ordinal suffix', () => {
+    it('formats day with correct ordinal suffix', () => {
       expect(DenverCriticalMass.formatDayWithOrdinal(1)).toBe('1<sup>st</sup>');
       expect(DenverCriticalMass.formatDayWithOrdinal(2)).toBe('2<sup>nd</sup>');
       expect(DenverCriticalMass.formatDayWithOrdinal(3)).toBe('3<sup>rd</sup>');
@@ -77,7 +77,7 @@ describe('DenverCriticalMass', () => {
       expect(DenverCriticalMass.formatDayWithOrdinal(31)).toBe('31<sup>st</sup>');
     });
 
-    it('should throw error for invalid input', () => {
+    it('throws error for invalid input', () => {
       expect(() => DenverCriticalMass.formatDayWithOrdinal(0)).toThrow('Day must be a positive number');
       expect(() => DenverCriticalMass.formatDayWithOrdinal(-1)).toThrow('Day must be a positive number');
       expect(() => DenverCriticalMass.formatDayWithOrdinal('1')).toThrow('Day must be a positive number');
@@ -85,13 +85,13 @@ describe('DenverCriticalMass', () => {
   });
 
   describe('getTargetDayOfWeek', () => {
-    it('should return 5 (Friday) for April-October', () => {
+    it('returns 5 (Friday) for April-October', () => {
       expect(DenverCriticalMass.getTargetDayOfWeek(3)).toBe(5); // April
       expect(DenverCriticalMass.getTargetDayOfWeek(4)).toBe(5); // May
       expect(DenverCriticalMass.getTargetDayOfWeek(9)).toBe(5); // October
     });
 
-    it('should return 0 (Sunday) for November-March', () => {
+    it('returns 0 (Sunday) for November-March', () => {
       expect(DenverCriticalMass.getTargetDayOfWeek(10)).toBe(0); // November
       expect(DenverCriticalMass.getTargetDayOfWeek(11)).toBe(0); // December
       expect(DenverCriticalMass.getTargetDayOfWeek(0)).toBe(0); // January
@@ -101,7 +101,7 @@ describe('DenverCriticalMass', () => {
   });
 
   describe('getLastTargetDayOfMonth', () => {
-    it('should return last Friday of October 2025', () => {
+    it('returns last Friday of October 2025', () => {
       const date = new Date(2025, 9, 1); // October 1, 2025
       const result = DenverCriticalMass.getLastTargetDayOfMonth(date);
 
@@ -110,7 +110,7 @@ describe('DenverCriticalMass', () => {
       expect(result.getDay()).toBe(5); // Friday
     });
 
-    it('should return last Sunday of November 2025', () => {
+    it('returns last Sunday of November 2025', () => {
       const date = new Date(2025, 10, 1); // November 1, 2025
       const result = DenverCriticalMass.getLastTargetDayOfMonth(date);
 
@@ -119,7 +119,7 @@ describe('DenverCriticalMass', () => {
       expect(result.getDay()).toBe(0); // Sunday
     });
 
-    it('should return last Sunday of December 2025', () => {
+    it('returns last Sunday of December 2025', () => {
       const date = new Date(2025, 11, 1); // December 1, 2025
       const result = DenverCriticalMass.getLastTargetDayOfMonth(date);
 
@@ -128,7 +128,7 @@ describe('DenverCriticalMass', () => {
       expect(result.getDay()).toBe(0); // Sunday
     });
 
-    it('should return last Sunday of March 2026', () => {
+    it('returns last Sunday of March 2026', () => {
       const date = new Date(2026, 2, 1); // March 1, 2026
       const result = DenverCriticalMass.getLastTargetDayOfMonth(date);
 
@@ -137,7 +137,7 @@ describe('DenverCriticalMass', () => {
       expect(result.getDay()).toBe(0); // Sunday
     });
 
-    it('should return last Friday of April 2026', () => {
+    it('returns last Friday of April 2026', () => {
       const date = new Date(2026, 3, 1); // April 1, 2026
       const result = DenverCriticalMass.getLastTargetDayOfMonth(date);
 
@@ -146,7 +146,7 @@ describe('DenverCriticalMass', () => {
       expect(result.getDay()).toBe(5); // Friday
     });
 
-    it('should roll over to next month if date is past the event', () => {
+    it('rolls over to next month if date is past the event', () => {
       // October 31, 2025 is the last Friday of October
       // If we check on Nov 1, it should return the next event (last Sunday of November)
       const date = new Date(2025, 10, 1, 0, 0, 0, 0); // November 1, 2025 at midnight
@@ -158,7 +158,7 @@ describe('DenverCriticalMass', () => {
   });
 
   describe('isWinterSeason', () => {
-    it('should return true for November-March', () => {
+    it('returns true for November-March', () => {
       expect(DenverCriticalMass.isWinterSeason(10)).toBe(true); // November
       expect(DenverCriticalMass.isWinterSeason(11)).toBe(true); // December
       expect(DenverCriticalMass.isWinterSeason(0)).toBe(true); // January
@@ -166,7 +166,7 @@ describe('DenverCriticalMass', () => {
       expect(DenverCriticalMass.isWinterSeason(2)).toBe(true); // March
     });
 
-    it('should return false for April-October', () => {
+    it('returns false for April-October', () => {
       expect(DenverCriticalMass.isWinterSeason(3)).toBe(false); // April
       expect(DenverCriticalMass.isWinterSeason(4)).toBe(false); // May
       expect(DenverCriticalMass.isWinterSeason(5)).toBe(false); // June
@@ -178,14 +178,14 @@ describe('DenverCriticalMass', () => {
   });
 
   describe('getEventTimes', () => {
-    it('should return winter times for November-March', () => {
+    it('returns winter times for November-March', () => {
       const times = DenverCriticalMass.getEventTimes(10); // November
       expect(times.dayName).toBe('Sunday');
       expect(times.meetTime).toBe('1:30pm');
       expect(times.rideTime).toBe('2:00pm');
     });
 
-    it('should return summer times for April-October', () => {
+    it('returns summer times for April-October', () => {
       const times = DenverCriticalMass.getEventTimes(3); // April
       expect(times.dayName).toBe('Friday');
       expect(times.meetTime).toBe('6:30pm');
@@ -206,7 +206,7 @@ describe('DenverCriticalMass', () => {
       `;
     });
 
-    it('should update DOM elements with correct values', () => {
+    it('updates DOM elements with correct values', () => {
       DenverCriticalMass.updateDOM();
 
       const monthEl = document.querySelector('[data-month]');
@@ -224,7 +224,7 @@ describe('DenverCriticalMass', () => {
       expect(rideTimeEl.innerHTML).toMatch(/2:00pm|7:00pm/);
     });
 
-    it('should handle missing DOM elements gracefully', () => {
+    it('handles missing DOM elements gracefully', () => {
       document.body.innerHTML = ''; // Empty DOM
 
       const consoleSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
@@ -237,8 +237,7 @@ describe('DenverCriticalMass', () => {
   });
 
   describe('Integration: Season Transition', () => {
-    it('should correctly transition from October (Friday) to November (Sunday)', () => {
-      // Last Friday of October 2025 is Oct 31
+    it('transitions from October (Friday) to November (Sunday)', () => {
       const octoberEvent = DenverCriticalMass.getLastTargetDayOfMonth(new Date(2025, 9, 1));
       expect(octoberEvent.getMonth()).toBe(9);
       expect(octoberEvent.getDate()).toBe(31);
@@ -248,7 +247,6 @@ describe('DenverCriticalMass', () => {
       expect(octoberTimes.dayName).toBe('Friday');
       expect(octoberTimes.meetTime).toBe('6:30pm');
 
-      // After October 31, should roll to last Sunday of November
       const novemberEvent = DenverCriticalMass.getLastTargetDayOfMonth(new Date(2025, 10, 1));
       expect(novemberEvent.getMonth()).toBe(10);
       expect(novemberEvent.getDate()).toBe(30);
@@ -259,8 +257,7 @@ describe('DenverCriticalMass', () => {
       expect(novemberTimes.meetTime).toBe('1:30pm');
     });
 
-    it('should correctly transition from March (Sunday) to April (Friday)', () => {
-      // Last Sunday of March 2026 is March 29
+    it('transitions from March (Sunday) to April (Friday)', () => {
       const marchEvent = DenverCriticalMass.getLastTargetDayOfMonth(new Date(2026, 2, 1));
       expect(marchEvent.getMonth()).toBe(2);
       expect(marchEvent.getDate()).toBe(29);
@@ -270,7 +267,6 @@ describe('DenverCriticalMass', () => {
       expect(marchTimes.dayName).toBe('Sunday');
       expect(marchTimes.meetTime).toBe('1:30pm');
 
-      // After March 29, should roll to last Friday of April
       const aprilEvent = DenverCriticalMass.getLastTargetDayOfMonth(new Date(2026, 3, 1));
       expect(aprilEvent.getMonth()).toBe(3);
       expect(aprilEvent.getDate()).toBe(24);
@@ -281,10 +277,9 @@ describe('DenverCriticalMass', () => {
       expect(aprilTimes.meetTime).toBe('6:30pm');
     });
 
-    it('should correctly transition from December (Sunday) to January (Sunday) with year rollover', () => {
-      // Last Sunday of December 2025 is Dec 28
+    it('transitions from December (Sunday) to January (Sunday) with year rollover', () => {
       const decemberEvent = DenverCriticalMass.getLastTargetDayOfMonth(new Date(2025, 11, 1));
-      expect(decemberEvent.getMonth()).toBe(11); // December
+      expect(decemberEvent.getMonth()).toBe(11);
       expect(decemberEvent.getDate()).toBe(28);
       expect(decemberEvent.getDay()).toBe(0); // Sunday
       expect(decemberEvent.getFullYear()).toBe(2025);
@@ -293,12 +288,11 @@ describe('DenverCriticalMass', () => {
       expect(decemberTimes.dayName).toBe('Sunday');
       expect(decemberTimes.meetTime).toBe('1:30pm');
 
-      // After December 28, 2025, should roll to last Sunday of January 2026
       const januaryEvent = DenverCriticalMass.getLastTargetDayOfMonth(new Date(2026, 0, 1));
-      expect(januaryEvent.getMonth()).toBe(0); // January
+      expect(januaryEvent.getMonth()).toBe(0);
       expect(januaryEvent.getDate()).toBe(25);
       expect(januaryEvent.getDay()).toBe(0); // Sunday
-      expect(januaryEvent.getFullYear()).toBe(2026); // Year should increment
+      expect(januaryEvent.getFullYear()).toBe(2026);
 
       const januaryTimes = DenverCriticalMass.getEventTimes(januaryEvent.getMonth());
       expect(januaryTimes.dayName).toBe('Sunday');
