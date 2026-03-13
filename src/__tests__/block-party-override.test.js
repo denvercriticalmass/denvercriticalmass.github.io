@@ -63,8 +63,10 @@ describe('BlockPartyOverride', () => {
       expect(document.querySelector('[data-meet-time]').innerHTML).toBe('11:00am');
       expect(document.querySelector('[data-ride-time]').innerHTML).toBe('11:30am');
       expect(document.querySelector('[data-day-name]').innerHTML).toBe('Sunday');
-      expect(document.querySelector('[data-winter-hours]').innerHTML).toContain('Larimer St Block Party');
-      expect(document.querySelector('[data-winter-hours]').innerHTML).toContain('events.bike');
+      const bannerHtml = document.querySelector('[data-winter-hours]').innerHTML;
+      expect(bannerHtml).toContain('Larimer St Block Party');
+      expect(bannerHtml).toContain('events.bike');
+      expect(bannerHtml).toContain('✨');
       vi.useRealTimers();
     });
 

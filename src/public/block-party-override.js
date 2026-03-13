@@ -20,7 +20,7 @@ const BlockPartyOverride = (() => {
     if (dayNameEl) dayNameEl.innerHTML = "Sunday";
     if (winterHoursEl) {
       winterHoursEl.innerHTML =
-        '<a href="https://www.events.bike/event/5bf3a5bb-8e68-4597-b156-ae17f520f74d" class="text-blue-500 dark:text-blue-300 hover:underline">Larimer St Block Party</a>';
+        '✨ <a href="https://www.events.bike/event/5bf3a5bb-8e68-4597-b156-ae17f520f74d" class="text-blue-500 dark:text-blue-300 hover:underline">Larimer St Block Party</a> ✨';
     }
   };
 
