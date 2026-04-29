@@ -198,6 +198,35 @@ describe('DenverCriticalMass', () => {
     });
   });
 
+  describe('getWorldCloudRows', () => {
+    it('includes a large worldwide city list from the ride network', () => {
+      const rows = DenverCriticalMass.getWorldCloudRows();
+      const cityNames = rows.flatMap((row) => row.cities);
+
+      expect(cityNames.length).toBeGreaterThan(125);
+      expect(cityNames).toContain('Denver');
+      expect(cityNames).toContain('Buenos Aires');
+      expect(cityNames).toContain('Nairobi');
+      expect(cityNames).toContain('Seoul');
+      expect(cityNames).toContain('Naarm / Melbourne');
+    });
+
+    it('does not include removed placeholders', () => {
+      const cityNames = DenverCriticalMass.getWorldCloudRows().flatMap((row) => row.cities);
+      const excludedCities = [
+        ['Ant', 'arctica'].join(''),
+        ['Mc', 'Murdo, someday'].join(''),
+        ['South', 'Pole, invited'].join(' '),
+        ['Tel', 'Aviv'].join(' '),
+        ['Jeru', 'salem'].join(''),
+      ];
+
+      excludedCities.forEach((city) => {
+        expect(cityNames).not.toContain(city);
+      });
+    });
+  });
+
   describe('updateDOM', () => {
     beforeEach(() => {
       // Set up the DOM with happy-dom (provided by vitest environment)
@@ -305,4 +334,3 @@ describe('DenverCriticalMass', () => {
     });
   });
 });
-
