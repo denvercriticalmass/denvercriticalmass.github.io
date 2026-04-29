@@ -5,18 +5,16 @@ export default [
   { ignores: ["dist/", "node_modules/"] },
   js.configs.recommended,
   {
-    files: ["src/public/**/*.js"],
+    files: ["src/**/*.js"],
     languageOptions: {
       ecmaVersion: 2024,
-      sourceType: "script",
-      globals: { ...globals.browser, module: "readonly" },
+      sourceType: "module",
+      globals: globals.browser,
     },
   },
   {
     files: ["src/__tests__/**/*.js"],
     languageOptions: {
-      ecmaVersion: 2024,
-      sourceType: "module",
       globals: { ...globals.browser, ...globals.node },
     },
   },
