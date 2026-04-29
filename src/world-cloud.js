@@ -1,239 +1,21 @@
-const worldCloudRows = [
-  {
-    modifier: "north",
-    cities: [
-      "Denver",
-      "Albuquerque",
-      "Chicago",
-      "Raleigh",
-      "Greensboro",
-      "Charlotte",
-      "Gainesville",
-      "Orlando",
-      "Austin",
-      "Houston",
-      "McAllen",
-      "Fort Worth",
-      "Boise",
-      "Bakersfield",
-      "Seattle",
-      "San Francisco",
-      "Edmonton",
-      "Calgary",
-      "Montreal",
-      "Kanata",
-      "New London",
-      "New Orleans",
-      "El Paso",
-      "Guadalajara",
-      "Guatemala City",
-      "Nanaimo",
-      "Washington DC",
-    ],
-  },
-  {
-    modifier: "south",
-    cities: [
-      "Buenos Aires",
-      "Rio de Janeiro",
-      "Sao Paulo",
-      "Porto Alegre",
-      "Dourados",
-      "Recife",
-      "Caxias do Sul",
-      "Goiania",
-      "Guayaquil",
-      "Montevideo",
-      "Tarija",
-      "Salvador",
-      "Joao Pessoa",
-      "Marilia",
-      "Manaus",
-      "Brasilia",
-      "Campinas",
-      "Natal",
-    ],
-  },
-  {
-    modifier: "europe",
-    cities: [
-      "London",
-      "Belfast",
-      "Aberdeen",
-      "Dundee",
-      "Inverness",
-      "Norwich",
-      "Dublin",
-      "Antwerp",
-      "Brussels",
-      "Namur",
-      "Lorient",
-      "Lyon",
-      "Millau",
-      "Montpellier",
-      "Nantes",
-      "Nice",
-      "Saint-Brieuc",
-      "Toulouse",
-      "Bordeaux",
-      "Lisbon",
-      "Porto",
-      "Valencia",
-      "Granada",
-      "Pamplona",
-      "Gasteiz",
-      "Madrid",
-      "Rome",
-      "Firenze",
-      "Milano",
-      "Genova",
-      "Cremona",
-      "Parma",
-      "Ticino",
-      "Basel",
-      "Bern",
-      "Luzern",
-      "Zurich",
-      "Winti",
-      "Graz",
-      "Vienna",
-      "St. Veit/Glan",
-      "Hamburg",
-      "Bremen",
-      "Bonn",
-      "Braunschweig",
-      "Dortmund",
-      "Dresden",
-      "Duisburg",
-      "Dusseldorf",
-      "Erfurt",
-      "Erlangen",
-      "Freising",
-      "Hildesheim",
-      "Jena",
-      "Kassel",
-      "Ludenscheid",
-      "Luneburg",
-      "Mainz",
-      "Munich",
-      "Munster",
-      "Neuss",
-      "Offenbach",
-      "Oldenburg",
-      "Pforzheim",
-      "Saarbrucken",
-      "Schussental",
-      "Stuttgart",
-      "Trier",
-      "Wolfsburg",
-      "Wuppertal",
-      "Prague",
-      "Czestochowa",
-      "Bratislava",
-      "Nitra",
-      "Timisoara",
-      "Istanbul",
-      "Izmir",
-      "Bergen",
-      "Gondomar",
-      "Brescia",
-      "Bergamo",
-      "Viana do Castelo",
-      "Treviso",
-    ],
-  },
-  {
-    modifier: "africa",
-    cities: [
-      "Nairobi",
-      "Mombasa",
-      "Nakuru",
-      "Thika",
-      "Cape Town",
-      "Johannesburg",
-      "Durban",
-      "Casablanca",
-      "Safi",
-      "Dar es Salaam",
-    ],
-  },
-  {
-    modifier: "asia",
-    cities: [
-      "Seoul",
-      "Tokyo",
-      "Nagoya",
-      "Jakarta",
-      "Bandung",
-      "Bekasi",
-      "Cimahi",
-      "Kendari",
-      "Sukabumi",
-      "Kuala Lumpur",
-      "Manila",
-      "Kathmandu",
-      "Karachi",
-      "Lahore",
-    ],
-  },
-  {
-    modifier: "oceania",
-    cities: [
-      "Melbourne",
-      "Sydney",
-      "Brisbane",
-      "Adelaide",
-      "Perth",
-      "Canberra",
-      "Hobart",
-      "Dunedin",
-    ],
-  },
-];
+import {
+  desktopBubblePositions,
+  mobileBubblePositions,
+  worldCloudRows,
+} from "./world-cloud-data.js";
 
-const desktopBubblePositions = [
-  { x: 18, y: 15, size: "large", tilt: -4 },
-  { x: 39, y: 12, size: "small", tilt: 3 },
-  { x: 58, y: 16, size: "medium", tilt: -1 },
-  { x: 77, y: 22, size: "small", tilt: 5 },
-  { x: 27, y: 29, size: "small", tilt: 4 },
-  { x: 49, y: 31, size: "large", tilt: 2 },
-  { x: 69, y: 36, size: "small", tilt: -2 },
-  { x: 17, y: 43, size: "medium", tilt: -3 },
-  { x: 36, y: 48, size: "medium", tilt: 2 },
-  { x: 56, y: 52, size: "small", tilt: -5 },
-  { x: 76, y: 55, size: "large", tilt: 3 },
-  { x: 26, y: 65, size: "small", tilt: -2 },
-  { x: 45, y: 68, size: "tiny", tilt: -5 },
-  { x: 64, y: 72, size: "medium", tilt: 4 },
-  { x: 81, y: 76, size: "tiny", tilt: -4 },
-  { x: 36, y: 80, size: "medium", tilt: 2 },
-];
-
-const mobileBubblePositions = [
-  { x: 14, y: 12, size: "medium", tilt: -4 },
-  { x: 58, y: 9, size: "small", tilt: 3 },
-  { x: 36, y: 24, size: "large", tilt: -1 },
-  { x: 81, y: 32, size: "small", tilt: 5 },
-  { x: 12, y: 40, size: "small", tilt: 4 },
-  { x: 55, y: 49, size: "medium", tilt: 2 },
-  { x: 30, y: 61, size: "large", tilt: -3 },
-  { x: 70, y: 63, size: "small", tilt: 4 },
-  { x: 86, y: 73, size: "tiny", tilt: -2 },
-  { x: 15, y: 84, size: "small", tilt: 3 },
-  { x: 55, y: 88, size: "medium", tilt: -5 },
-  { x: 80, y: 91, size: "small", tilt: 2 },
-];
+const SHORT_NAME = 7;
+const MEDIUM_NAME = 13;
+const LONG_NAME = 20;
 
 let activeTimer;
 let activeInteractionCleanup;
-let topZIndex = 10;
 
 export const getWorldCloudRows = () =>
-  worldCloudRows.map((row) => ({ modifier: row.modifier, cities: [...row.cities] }));
+  worldCloudRows.map((row) => ({ continent: row.continent, cities: [...row.cities] }));
 
 const getCityPool = () =>
-  worldCloudRows.flatMap((row) => row.cities.map((city) => ({ city, modifier: row.modifier })));
+  worldCloudRows.flatMap((row) => row.cities.map((city) => ({ city, continent: row.continent })));
 
 const clamp = (value, min, max) => Math.min(Math.max(value, min), max);
 
@@ -252,12 +34,11 @@ const jitterPosition = (position, seed) => ({
 });
 
 const pickRandomIndexes = (count, total) => {
-  const indexes = [];
-  while (indexes.length < count && indexes.length < total) {
-    const next = Math.floor(Math.random() * total);
-    if (!indexes.includes(next)) indexes.push(next);
+  const indexes = new Set();
+  while (indexes.size < count && indexes.size < total) {
+    indexes.add(Math.floor(Math.random() * total));
   }
-  return indexes;
+  return [...indexes];
 };
 
 const buildStaggers = (count) => {
@@ -269,11 +50,11 @@ const buildStaggers = (count) => {
 };
 
 const sizeForCity = (city, position) => {
-  if (position.size === "large") return city.length <= 7 ? "medium" : "large";
-  if (position.size === "medium") return city.length <= 7 ? "small" : "medium";
-  if (city.length <= 7) return "tiny";
-  if (city.length <= 13) return "small";
-  if (city.length >= 20) return "large";
+  if (position.size === "large") return city.length <= SHORT_NAME ? "medium" : "large";
+  if (position.size === "medium") return city.length <= SHORT_NAME ? "small" : "medium";
+  if (city.length <= SHORT_NAME) return "tiny";
+  if (city.length <= MEDIUM_NAME) return "small";
+  if (city.length >= LONG_NAME) return "large";
   return "medium";
 };
 
@@ -291,7 +72,7 @@ const applyPosition = (bubble, position) => {
 
 const applyEntry = (bubble, entry, position) => {
   bubble.textContent = entry.city;
-  bubble.dataset.continent = entry.modifier;
+  bubble.dataset.continent = entry.continent;
   bubble.dataset.size = sizeForCity(entry.city, position);
 };
 
@@ -315,8 +96,6 @@ const cleanupInteraction = () => {
 };
 
 const initializeDrag = (bubbles) => {
-  if (typeof window === "undefined") return;
-
   const states = bubbles.map((bubble) => ({
     bubble,
     x: 0,
@@ -334,6 +113,7 @@ const initializeDrag = (bubbles) => {
   const stateByBubble = new Map(states.map((s) => [s.bubble, s]));
   const activeDrags = new Map();
   let frame = null;
+  let topZIndex = 10;
 
   const limitOffset = (x, y) => {
     const distance = Math.hypot(x, y);
@@ -469,8 +249,6 @@ const initializeDrag = (bubbles) => {
 };
 
 const initializeRepel = (cloud, bubbles) => {
-  if (typeof window === "undefined") return;
-
   const states = bubbles.map((bubble) => ({ bubble, x: 0, y: 0, targetX: 0, targetY: 0 }));
   const pointer = { active: false, x: 0, y: 0 };
   let frame = null;
@@ -556,9 +334,8 @@ const initializeRepel = (cloud, bubbles) => {
   };
 };
 
-const initializeInteraction = (cloud, bubbles, reducedMotion) => {
+const initializeInteraction = (cloud, bubbles) => {
   cleanupInteraction();
-  if (reducedMotion || typeof window === "undefined") return;
   if (isMobile()) {
     initializeDrag(bubbles);
     return;
@@ -566,38 +343,7 @@ const initializeInteraction = (cloud, bubbles, reducedMotion) => {
   initializeRepel(cloud, bubbles);
 };
 
-export const initializeWorldCloud = () => {
-  if (typeof document === "undefined") return;
-  const cloud = document.querySelector("[data-world-cloud]");
-  if (!cloud) return;
-
-  const cityPool = getCityPool();
-  const positions = getActivePositions();
-  if (activeTimer && typeof window !== "undefined" && window.clearInterval) {
-    window.clearInterval(activeTimer);
-  }
-
-  topZIndex = 10;
-  cleanupInteraction();
-  cloud.replaceChildren();
-
-  const bubbles = positions.map((position, index) => {
-    const entry = cityPool[(index * 11) % cityPool.length];
-    const bubble = createBubble(entry, position);
-    bubble.style.setProperty("--delay", `-${1600 + index * 730}ms`);
-    cloud.appendChild(bubble);
-    return bubble;
-  });
-
-  const reducedMotion =
-    typeof window !== "undefined" &&
-    window.matchMedia &&
-    window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-
-  initializeInteraction(cloud, bubbles, reducedMotion);
-
-  if (reducedMotion || typeof window === "undefined" || !window.setInterval) return;
-
+const startCityRotation = (bubbles, positions, cityPool) => {
   const queue = cityPool
     .map((entry, index) => ({ entry, sort: (index * 37) % cityPool.length }))
     .sort((a, b) => a.sort - b.sort)
@@ -605,14 +351,13 @@ export const initializeWorldCloud = () => {
   let queueIndex = bubbles.length;
   let positionOffset = 3;
 
-  activeTimer = window.setInterval(() => {
+  return window.setInterval(() => {
     const batchSize = Math.min(Math.random() < 0.5 ? 2 : 3, bubbles.length);
     const bubbleIndexes = pickRandomIndexes(batchSize, bubbles.length);
     const staggers = buildStaggers(bubbleIndexes.length);
 
-    for (let i = 0; i < bubbleIndexes.length; i += 1) {
+    bubbleIndexes.forEach((bubbleIndex, i) => {
       const currentQueueIndex = queueIndex + i;
-      const bubbleIndex = bubbleIndexes[i];
       const bubble = bubbles[bubbleIndex];
       const entry = queue[currentQueueIndex % queue.length];
       const nextPosition = jitterPosition(
@@ -631,9 +376,40 @@ export const initializeWorldCloud = () => {
           window.setTimeout(() => bubble.classList.remove("is-settling"), 1800);
         }, 1450);
       }, staggers[i]);
-    }
+    });
 
     queueIndex += bubbleIndexes.length;
     positionOffset = (positionOffset + 2) % positions.length;
   }, 9000);
+};
+
+export const initializeWorldCloud = () => {
+  if (typeof document === "undefined") return;
+  const cloud = document.querySelector("[data-world-cloud]");
+  if (!cloud) return;
+
+  const reducedMotion =
+    typeof window !== "undefined" &&
+    window.matchMedia &&
+    window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  const cityPool = getCityPool();
+  const positions = getActivePositions();
+
+  if (activeTimer) window.clearInterval(activeTimer);
+  cleanupInteraction();
+  cloud.replaceChildren();
+
+  const bubbles = positions.map((position, index) => {
+    const entry = cityPool[(index * 11) % cityPool.length];
+    const bubble = createBubble(entry, position);
+    bubble.style.setProperty("--delay", `-${1600 + index * 730}ms`);
+    cloud.appendChild(bubble);
+    return bubble;
+  });
+
+  if (reducedMotion) return;
+
+  initializeInteraction(cloud, bubbles);
+  activeTimer = startCityRotation(bubbles, positions, cityPool);
 };

@@ -3,8 +3,10 @@ import { getWorldCloudRows } from "../world-cloud.js";
 
 describe("getWorldCloudRows", () => {
   it("includes a large worldwide city list from the ride network", () => {
-    const cityNames = getWorldCloudRows().flatMap((row) => row.cities);
+    const rows = getWorldCloudRows();
+    const cityNames = rows.flatMap((row) => row.cities);
 
+    expect(rows.every((row) => typeof row.continent === "string")).toBe(true);
     expect(cityNames.length).toBeGreaterThan(125);
     expect(cityNames).toContain("Denver");
     expect(cityNames).toContain("Chicago");
