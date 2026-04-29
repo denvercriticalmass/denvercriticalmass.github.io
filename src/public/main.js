@@ -116,8 +116,8 @@ const DenverCriticalMass = (() => {
 	      "New London",
 	      "New Orleans",
 	      "El Paso",
+	      "Guadalajara",
 	      "Guatemala City",
-	      "Toluca",
 	    ],
 	  },
 	  {
@@ -281,7 +281,7 @@ const DenverCriticalMass = (() => {
 	  {
 	    modifier: "oceania",
 	    cities: [
-	      "Naarm / Melbourne",
+	      "Melbourne",
 	      "Sydney",
 	      "Brisbane",
 	      "Adelaide",

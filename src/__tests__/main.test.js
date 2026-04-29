@@ -205,10 +205,13 @@ describe('DenverCriticalMass', () => {
 
       expect(cityNames.length).toBeGreaterThan(125);
       expect(cityNames).toContain('Denver');
+      expect(cityNames).toContain('Chicago');
+      expect(cityNames).toContain('Guadalajara');
+      expect(cityNames).toContain('Montreal');
       expect(cityNames).toContain('Buenos Aires');
       expect(cityNames).toContain('Nairobi');
       expect(cityNames).toContain('Seoul');
-      expect(cityNames).toContain('Naarm / Melbourne');
+      expect(cityNames).toContain('Melbourne');
     });
 
     it('does not include removed placeholders', () => {
