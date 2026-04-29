@@ -309,48 +309,8 @@ summary:focus-visible {
   }
 }
 
-[data-birdfly] {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  z-index: 0;
-}
-
-.bird {
-  position: absolute;
-  top: var(--y);
-  left: -3rem;
-  width: var(--size, 2rem);
-  color: #f9c74f;
-  user-select: none;
-  animation:
-    birdfly var(--fly-duration, 20s) linear infinite,
-    birdbob var(--bob-duration, 2s) ease-in-out infinite alternate;
-  animation-delay: var(--fly-delay, 0s), var(--bob-delay, 0s);
-  will-change: transform;
-}
-
-.bird svg {
-  display: block;
-  width: 100%;
-  height: auto;
-}
-
-@keyframes birdfly {
-  to {
-    transform: translateX(calc(100vw + 6rem));
-  }
-}
-
-@keyframes birdbob {
-  to {
-    margin-top: 0.6rem;
-  }
-}
-
 @media (prefers-reduced-motion: reduce) {
-  [data-snowfall],
-  [data-birdfly] {
+  [data-snowfall] {
     display: none;
   }
 }
