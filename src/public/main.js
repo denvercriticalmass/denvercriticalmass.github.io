@@ -160,6 +160,7 @@ const DenverCriticalMass = (() => {
         "Granada",
         "Pamplona",
         "Gasteiz",
+        "Madrid",
         "Rome",
         "Firenze",
         "Milano",
