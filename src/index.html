@@ -41,6 +41,10 @@
               Denver Critical Mass
             </h1>
             <p
+              data-winter-hours
+              class="winter-hours-animate mt-4 text-sm font-black tracking-wide text-[#d62828] uppercase dark:text-[#f9c74f]"
+            ></p>
+            <p
               class="mt-5 max-w-2xl text-lg leading-relaxed font-medium text-neutral-800 sm:mt-6 sm:text-xl dark:text-stone-200"
             >
               A worldwide protest ride for safe streets and every person's right to move with
@@ -74,10 +78,6 @@
             aria-labelledby="next-ride-heading"
             class="ride-card border-2 border-neutral-950 bg-white p-5 shadow-[8px_8px_0_#171717] dark:border-stone-100 dark:bg-[#1d211f] dark:shadow-[8px_8px_0_#f5f5f4]"
           >
-            <div
-              data-winter-hours
-              class="winter-hours-animate mb-4 text-sm font-black text-[#d62828] uppercase dark:text-[#f9c74f]"
-            ></div>
             <p
               id="next-ride-heading"
               class="text-xs font-black tracking-wide text-neutral-500 uppercase dark:text-stone-400"
@@ -524,6 +524,7 @@
         </p>
       </div>
     </footer>
+    <div data-snowfall aria-hidden="true"></div>
     <script type="module" src="./main.js"></script>
   </body>
 </html>

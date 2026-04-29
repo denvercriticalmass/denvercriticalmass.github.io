@@ -271,6 +271,51 @@ summary:focus-visible {
   animation: winter-pulse 2s ease-in-out infinite;
 }
 
+[data-winter-hours]:empty {
+  display: none;
+}
+
+[data-snowfall] {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 1;
+}
+
+.snowflake {
+  position: absolute;
+  top: -2rem;
+  left: var(--x);
+  font-size: var(--size, 1rem);
+  color: rgba(255, 255, 255, 0.85);
+  text-shadow: 0 0 4px rgba(255, 255, 255, 0.4);
+  user-select: none;
+  animation:
+    snowfall var(--fall-duration, 12s) linear infinite,
+    snowdrift var(--drift-duration, 4s) ease-in-out infinite alternate;
+  animation-delay: var(--fall-delay, 0s), var(--drift-delay, 0s);
+  will-change: transform;
+}
+
+@keyframes snowfall {
+  to {
+    transform: translateY(110vh);
+  }
+}
+
+@keyframes snowdrift {
+  to {
+    margin-left: var(--drift, 1rem);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-snowfall] {
+    display: none;
+  }
+}
+
 :root[data-season="winter"] {
   color-scheme: light;
 
