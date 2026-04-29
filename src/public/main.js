@@ -14,7 +14,8 @@ const DenverCriticalMass = (() => {
   const ordinalRules = new Intl.PluralRules("en", { type: "ordinal" });
   const ordinalSuffixes = { one: "st", two: "nd", few: "rd", other: "th" };
 
-  const getOrdinalSuffix = (day) => ordinalSuffixes[ordinalRules.select(day)] ?? ordinalSuffixes.other;
+  const getOrdinalSuffix = (day) =>
+    ordinalSuffixes[ordinalRules.select(day)] ?? ordinalSuffixes.other;
 
   const formatDayWithOrdinal = (day) => {
     if (typeof day !== "number" || day < 1) {
@@ -289,10 +290,11 @@ const DenverCriticalMass = (() => {
     },
   ];
 
-  const getWorldCloudRows = () => worldCloudRows.map((row) => ({
-    modifier: row.modifier,
-    cities: [...row.cities],
-  }));
+  const getWorldCloudRows = () =>
+    worldCloudRows.map((row) => ({
+      modifier: row.modifier,
+      cities: [...row.cities],
+    }));
 
   const worldBubblePositions = [
     { x: 18, y: 15, size: "large", tilt: -4 },
@@ -328,17 +330,15 @@ const DenverCriticalMass = (() => {
     { x: 80, y: 91, size: "small", tilt: 2 },
   ];
 
-  const getWorldCityPool = () => worldCloudRows.flatMap((row) => (
-    row.cities.map((city) => ({ city, modifier: row.modifier }))
-  ));
+  const getWorldCityPool = () =>
+    worldCloudRows.flatMap((row) => row.cities.map((city) => ({ city, modifier: row.modifier })));
 
   const clamp = (value, min, max) => Math.min(Math.max(value, min), max);
 
-  const isMobileWorldCloud = () => (
-    typeof window !== "undefined"
-    && window.matchMedia
-    && window.matchMedia("(max-width: 640px)").matches
-  );
+  const isMobileWorldCloud = () =>
+    typeof window !== "undefined" &&
+    window.matchMedia &&
+    window.matchMedia("(max-width: 640px)").matches;
 
   const getActiveWorldBubblePositions = () => {
     if (isMobileWorldCloud()) return mobileWorldBubblePositions;
@@ -480,11 +480,11 @@ const DenverCriticalMass = (() => {
         setBubbleInteractionOffset(state.bubble, state.x, state.y);
 
         if (
-          state.dragging
-          || Math.abs(state.x - state.targetX) > 0.08
-          || Math.abs(state.y - state.targetY) > 0.08
-          || Math.abs(state.vx) > 0.08
-          || Math.abs(state.vy) > 0.08
+          state.dragging ||
+          Math.abs(state.x - state.targetX) > 0.08 ||
+          Math.abs(state.y - state.targetY) > 0.08 ||
+          Math.abs(state.vx) > 0.08 ||
+          Math.abs(state.vy) > 0.08
         ) {
           moving = true;
         }
@@ -643,10 +643,7 @@ const DenverCriticalMass = (() => {
 
         setBubbleInteractionOffset(state.bubble, state.x, state.y);
 
-        if (
-          Math.abs(state.x - state.targetX) > 0.08
-          || Math.abs(state.y - state.targetY) > 0.08
-        ) {
+        if (Math.abs(state.x - state.targetX) > 0.08 || Math.abs(state.y - state.targetY) > 0.08) {
           moving = true;
         }
       });
@@ -725,9 +722,10 @@ const DenverCriticalMass = (() => {
       return bubble;
     });
 
-    const reducedMotion = typeof window !== "undefined"
-      && window.matchMedia
-      && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const reducedMotion =
+      typeof window !== "undefined" &&
+      window.matchMedia &&
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
     initializeWorldBubbleInteraction(cloud, bubbles, reducedMotion);
 
@@ -790,7 +788,14 @@ const DenverCriticalMass = (() => {
     const rideTimeEl = document.querySelector("[data-ride-time]");
     const winterHoursEl = document.querySelector("[data-winter-hours]");
 
-    if (!monthEl || (!dayEl && !dayPlainEl) || !yearEl || !dayNameEl || !meetTimeEl || !rideTimeEl) {
+    if (
+      !monthEl ||
+      (!dayEl && !dayPlainEl) ||
+      !yearEl ||
+      !dayNameEl ||
+      !meetTimeEl ||
+      !rideTimeEl
+    ) {
       console.error("Required DOM elements not found");
       return;
     }

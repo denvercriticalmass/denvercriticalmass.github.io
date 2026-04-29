@@ -14,18 +14,17 @@ summary {
     transform: rotate(var(--tilt, 0deg)) scale(1);
   }
   25% {
-    translate:
-      calc(-50% + var(--float-x, 0.18rem) + var(--repel-x, 0px))
+    translate: calc(-50% + var(--float-x, 0.18rem) + var(--repel-x, 0px))
       calc(-50% - var(--float-y-mid, 0.3rem) + var(--repel-y, 0px));
     transform: rotate(calc(var(--tilt, 0deg) + 0.7deg)) scale(1.01);
   }
   50% {
-    translate: calc(-50% + var(--repel-x, 0px)) calc(-50% - var(--float-y, 0.65rem) + var(--repel-y, 0px));
+    translate: calc(-50% + var(--repel-x, 0px))
+      calc(-50% - var(--float-y, 0.65rem) + var(--repel-y, 0px));
     transform: rotate(var(--tilt, 0deg)) scale(1);
   }
   75% {
-    translate:
-      calc(-50% - var(--float-x, 0.16rem) + var(--repel-x, 0px))
+    translate: calc(-50% - var(--float-x, 0.16rem) + var(--repel-x, 0px))
       calc(-50% - var(--float-y-low, 0.23rem) + var(--repel-y, 0px));
     transform: rotate(calc(var(--tilt, 0deg) - 0.55deg)) scale(1.005);
   }
@@ -245,7 +244,8 @@ summary {
 }
 
 @keyframes winter-pulse {
-  0%, 100% {
+  0%,
+  100% {
     opacity: 1;
     transform: scale(1);
   }
