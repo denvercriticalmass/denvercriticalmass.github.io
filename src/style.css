@@ -261,161 +261,161 @@ summary {
 
 :root[data-season="winter"] {
   color-scheme: light;
-}
 
-:root[data-season="winter"] .season-page {
-  background: #dceaf2 !important;
-  color: #082f49 !important;
-}
+  .season-page {
+    background: #dceaf2 !important;
+    color: #082f49 !important;
+  }
 
-:root[data-season="winter"] .season-hero {
-  border-color: #075985 !important;
-  background: #dceaf2 !important;
-}
+  .season-hero {
+    border-color: #075985 !important;
+    background: #dceaf2 !important;
+  }
 
-:root[data-season="winter"] .season-hero,
-:root[data-season="winter"] .season-hero h1,
-:root[data-season="winter"] .season-hero a,
-:root[data-season="winter"] .ride-card,
-:root[data-season="winter"] .ride-card h2 {
-  color: #082f49 !important;
-}
+  .season-hero,
+  .season-hero h1,
+  .season-hero a,
+  .ride-card,
+  .ride-card h2 {
+    color: #082f49 !important;
+  }
 
-:root[data-season="winter"] .season-hero p:not(.season-pill),
-:root[data-season="winter"] .ride-card p,
-:root[data-season="winter"] .season-section p,
-:root[data-season="winter"] .season-card p,
-:root[data-season="winter"] .season-lead-section p,
-:root[data-season="winter"] .season-footer {
-  color: #164e63 !important;
-}
+  .season-hero p:not(.season-pill),
+  .ride-card p,
+  .season-section p,
+  .season-card p,
+  .season-lead-section p,
+  .season-footer {
+    color: #164e63 !important;
+  }
 
-:root[data-season="winter"] .season-pill,
-:root[data-season="winter"] [data-winter-hours],
-:root[data-season="winter"] .season-continent {
-  border-color: #075985 !important;
-  background: #d9edf7 !important;
-  color: #075985 !important;
-  box-shadow: 4px 4px 0 #86b6c8 !important;
-}
+  .season-pill,
+  [data-winter-hours],
+  .season-continent {
+    border-color: #075985 !important;
+    background: #d9edf7 !important;
+    color: #075985 !important;
+    box-shadow: 4px 4px 0 #86b6c8 !important;
+  }
 
-:root[data-season="winter"] [data-winter-hours] {
-  display: inline-flex;
-  width: fit-content;
-  padding: 0.45rem 0.65rem;
-  animation: none;
-  background: #f8fdff !important;
-}
+  [data-winter-hours] {
+    display: inline-flex;
+    width: fit-content;
+    padding: 0.45rem 0.65rem;
+    animation: none;
+    background: #f8fdff !important;
+  }
 
-:root[data-season="winter"] .season-action {
-  border-color: #075985 !important;
-  box-shadow: 4px 4px 0 #86b6c8 !important;
-}
+  .season-action {
+    border-color: #075985 !important;
+    box-shadow: 4px 4px 0 #86b6c8 !important;
+  }
 
-:root[data-season="winter"] .season-action-primary {
-  background: #0284c7 !important;
-  color: white !important;
-}
+  .season-action-primary {
+    background: #0284c7 !important;
+    color: white !important;
+  }
 
-:root[data-season="winter"] .season-action-events {
-  background: #d9edf7 !important;
-  color: #082f49 !important;
-}
+  .season-action-events {
+    background: #d9edf7 !important;
+    color: #082f49 !important;
+  }
 
-:root[data-season="winter"] .season-action-secondary {
-  background: #f8fdff !important;
-  color: #082f49 !important;
-}
+  .season-action-secondary {
+    background: #f8fdff !important;
+    color: #082f49 !important;
+  }
 
-:root[data-season="winter"] .ride-card {
-  border-color: #075985 !important;
-  background: #f8fdff !important;
-  box-shadow: 8px 8px 0 #86b6c8 !important;
-}
+  .ride-card {
+    border-color: #075985 !important;
+    background: #f8fdff !important;
+    box-shadow: 8px 8px 0 #86b6c8 !important;
+  }
 
-:root[data-season="winter"] .ride-card [class*="border-"] {
-  border-color: #075985 !important;
-}
+  .ride-card [class*="border-"] {
+    border-color: #075985 !important;
+  }
 
-:root[data-season="winter"] .season-map-section,
-:root[data-season="winter"] .season-values-section,
-:root[data-season="winter"] .season-footer {
-  border-color: #075985 !important;
-  background: #f6fbfd !important;
-}
+  .season-map-section,
+  .season-values-section,
+  .season-footer {
+    border-color: #075985 !important;
+    background: #f6fbfd !important;
+  }
 
-:root[data-season="winter"] .season-mission-section,
-:root[data-season="winter"] .season-worldwide-section,
-:root[data-season="winter"] .season-lead-section {
-  border-color: #075985 !important;
-  background: #dceaf2 !important;
-}
+  .season-mission-section,
+  .season-worldwide-section,
+  .season-lead-section {
+    border-color: #075985 !important;
+    background: #dceaf2 !important;
+  }
 
-:root[data-season="winter"] .season-worldwide-links,
-:root[data-season="winter"] .season-worldwide-links a,
-:root[data-season="winter"] .season-worldwide-links span {
-  color: #082f49 !important;
-}
+  .season-worldwide-links,
+  .season-worldwide-links a,
+  .season-worldwide-links span {
+    color: #082f49 !important;
+  }
 
-:root[data-season="winter"] .season-start-card {
-  border-color: #075985 !important;
-  background: #cfe5ee !important;
-  color: #082f49 !important;
-  box-shadow: 6px 6px 0 #86b6c8 !important;
-}
+  .season-start-card {
+    border-color: #075985 !important;
+    background: #cfe5ee !important;
+    color: #082f49 !important;
+    box-shadow: 6px 6px 0 #86b6c8 !important;
+  }
 
-:root[data-season="winter"] .season-map-frame,
-:root[data-season="winter"] .season-card,
-:root[data-season="winter"] .world-bubble {
-  border-color: #075985 !important;
-  background: #ffffff !important;
-  box-shadow: 4px 4px 0 #a9cbd8 !important;
-  color: #082f49 !important;
-}
+  .season-map-frame,
+  .season-card,
+  .world-bubble {
+    border-color: #075985 !important;
+    background: #ffffff !important;
+    box-shadow: 4px 4px 0 #a9cbd8 !important;
+    color: #082f49 !important;
+  }
 
-:root[data-season="winter"] .world-bubble[data-continent="north"],
-:root[data-season="winter"] .world-bubble[data-continent="asia"] {
-  background: #d7edf8 !important;
-}
+  .world-bubble[data-continent="north"],
+  .world-bubble[data-continent="asia"] {
+    background: #d7edf8 !important;
+  }
 
-:root[data-season="winter"] .world-bubble[data-continent="south"],
-:root[data-season="winter"] .world-bubble[data-continent="oceania"] {
-  background: #f8fdff !important;
-}
+  .world-bubble[data-continent="south"],
+  .world-bubble[data-continent="oceania"] {
+    background: #f8fdff !important;
+  }
 
-:root[data-season="winter"] .world-bubble[data-continent="europe"],
-:root[data-season="winter"] .world-bubble[data-continent="africa"] {
-  background: #eaf4f8 !important;
-}
+  .world-bubble[data-continent="europe"],
+  .world-bubble[data-continent="africa"] {
+    background: #eaf4f8 !important;
+  }
 
-:root[data-season="winter"] .world-bubble:nth-child(3n + 1) {
-  background: #cfe5ee !important;
-}
+  .world-bubble:nth-child(3n + 1) {
+    background: #cfe5ee !important;
+  }
 
-:root[data-season="winter"] .world-bubble:nth-child(3n + 2) {
-  background: #eef8fc !important;
-}
+  .world-bubble:nth-child(3n + 2) {
+    background: #eef8fc !important;
+  }
 
-:root[data-season="winter"] .world-bubble:nth-child(5n) {
-  background: #f8fdff !important;
-}
+  .world-bubble:nth-child(5n) {
+    background: #f8fdff !important;
+  }
 
-:root[data-season="winter"] .guideline-section {
-  background: #123447 !important;
-  color: #f8fdff !important;
-}
+  .guideline-section {
+    background: #123447 !important;
+    color: #f8fdff !important;
+  }
 
-:root[data-season="winter"] .guideline-section p,
-:root[data-season="winter"] .guideline-section a {
-  color: inherit !important;
-}
+  .guideline-section p,
+  .guideline-section a {
+    color: inherit !important;
+  }
 
-:root[data-season="winter"] .guideline-section [class*="border-"] {
-  border-color: #cfe5ee !important;
-}
+  .guideline-section [class*="border-"] {
+    border-color: #cfe5ee !important;
+  }
 
-:root[data-season="winter"] .events-band {
-  border-color: #075985 !important;
-  background: #d9edf7 !important;
-  color: #082f49 !important;
+  .events-band {
+    border-color: #075985 !important;
+    background: #d9edf7 !important;
+    color: #082f49 !important;
+  }
 }
