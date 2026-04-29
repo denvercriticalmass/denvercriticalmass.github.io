@@ -128,29 +128,29 @@ summary:focus-visible {
 }
 
 .world-bubble[data-continent="north"] {
-  background: #f6f0e4;
+  background: #fbd87c;
 }
 
 .world-bubble[data-continent="south"] {
-  background: #fffdf7;
+  background: #f4a261;
 }
 
 .world-bubble[data-continent="europe"] {
-  background: #f2e7cf;
+  background: #a8d4e8;
   color: #171717;
 }
 
 .world-bubble[data-continent="africa"] {
-  background: #e8efe5;
+  background: #c1e1a6;
   color: #171717;
 }
 
 .world-bubble[data-continent="asia"] {
-  background: #eef4f5;
+  background: #e8b8d4;
 }
 
 .world-bubble[data-continent="oceania"] {
-  background: #ffffff;
+  background: #fff0a8;
 }
 
 .world-bubble.is-changing {
