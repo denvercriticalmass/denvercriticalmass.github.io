@@ -48,8 +48,8 @@ describe('BlockPartyOverride', () => {
     beforeEach(() => {
       document.body.innerHTML = `
         <span data-day-name>Sunday</span>
-        <span data-meet-time>1:30pm</span>
-        <span data-ride-time>2:00pm</span>
+        <span data-meet-time>12:30pm</span>
+        <span data-ride-time>1:00pm</span>
         <div data-winter-hours></div>
       `;
     });
@@ -76,8 +76,8 @@ describe('BlockPartyOverride', () => {
       const override = loadOverride();
       override.apply();
 
-      expect(document.querySelector('[data-meet-time]').innerHTML).toBe('1:30pm');
-      expect(document.querySelector('[data-ride-time]').innerHTML).toBe('2:00pm');
+      expect(document.querySelector('[data-meet-time]').innerHTML).toBe('12:30pm');
+      expect(document.querySelector('[data-ride-time]').innerHTML).toBe('1:00pm');
       expect(document.querySelector('[data-winter-hours]').innerHTML).toBe('');
       vi.useRealTimers();
     });

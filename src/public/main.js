@@ -28,9 +28,9 @@ const DenverCriticalMass = (() => {
   };
 
   const getTargetDayOfWeek = (month) => {
-    // November (10) through March (2): Sunday (0)
-    // April (3) through October (9): Friday (5)
-    if (month >= 10 || month <= 2) {
+    // November (10) through April (3): Sunday (0)
+    // May (4) through October (9): Friday (5)
+    if (month >= 10 || month <= 3) {
       return 0; // Sunday
     }
     return 5; // Friday
@@ -59,15 +59,15 @@ const DenverCriticalMass = (() => {
   };
 
   const isWinterSeason = (month) => {
-    return month >= 10 || month <= 2;
+    return month >= 10 || month <= 3;
   };
 
   const getEventTimes = (month) => {
     const winter = isWinterSeason(month);
     return {
       dayName: winter ? "Sunday" : "Friday",
-      meetTime: winter ? "1:30pm" : "6:30pm",
-      rideTime: winter ? "2:00pm" : "7:00pm",
+      meetTime: winter ? "12:30pm" : "6:30pm",
+      rideTime: winter ? "1:00pm" : "7:00pm",
     };
   };
 

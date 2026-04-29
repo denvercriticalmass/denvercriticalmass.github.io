@@ -85,18 +85,18 @@ describe('DenverCriticalMass', () => {
   });
 
   describe('getTargetDayOfWeek', () => {
-    it('returns 5 (Friday) for April-October', () => {
-      expect(DenverCriticalMass.getTargetDayOfWeek(3)).toBe(5); // April
+    it('returns 5 (Friday) for May-October', () => {
       expect(DenverCriticalMass.getTargetDayOfWeek(4)).toBe(5); // May
       expect(DenverCriticalMass.getTargetDayOfWeek(9)).toBe(5); // October
     });
 
-    it('returns 0 (Sunday) for November-March', () => {
+    it('returns 0 (Sunday) for November-April', () => {
       expect(DenverCriticalMass.getTargetDayOfWeek(10)).toBe(0); // November
       expect(DenverCriticalMass.getTargetDayOfWeek(11)).toBe(0); // December
       expect(DenverCriticalMass.getTargetDayOfWeek(0)).toBe(0); // January
       expect(DenverCriticalMass.getTargetDayOfWeek(1)).toBe(0); // February
       expect(DenverCriticalMass.getTargetDayOfWeek(2)).toBe(0); // March
+      expect(DenverCriticalMass.getTargetDayOfWeek(3)).toBe(0); // April
     });
   });
 
@@ -137,13 +137,13 @@ describe('DenverCriticalMass', () => {
       expect(result.getDay()).toBe(0); // Sunday
     });
 
-    it('returns last Friday of April 2026', () => {
+    it('returns last Sunday of April 2026', () => {
       const date = new Date(2026, 3, 1); // April 1, 2026
       const result = DenverCriticalMass.getLastTargetDayOfMonth(date);
 
       expect(result.getMonth()).toBe(3); // April
-      expect(result.getDate()).toBe(24); // Last Friday is April 24
-      expect(result.getDay()).toBe(5); // Friday
+      expect(result.getDate()).toBe(26); // Last Sunday is April 26
+      expect(result.getDay()).toBe(0); // Sunday
     });
 
     it('rolls over to next month if date is past the event', () => {
@@ -158,16 +158,16 @@ describe('DenverCriticalMass', () => {
   });
 
   describe('isWinterSeason', () => {
-    it('returns true for November-March', () => {
+    it('returns true for November-April', () => {
       expect(DenverCriticalMass.isWinterSeason(10)).toBe(true); // November
       expect(DenverCriticalMass.isWinterSeason(11)).toBe(true); // December
       expect(DenverCriticalMass.isWinterSeason(0)).toBe(true); // January
       expect(DenverCriticalMass.isWinterSeason(1)).toBe(true); // February
       expect(DenverCriticalMass.isWinterSeason(2)).toBe(true); // March
+      expect(DenverCriticalMass.isWinterSeason(3)).toBe(true); // April
     });
 
-    it('returns false for April-October', () => {
-      expect(DenverCriticalMass.isWinterSeason(3)).toBe(false); // April
+    it('returns false for May-October', () => {
       expect(DenverCriticalMass.isWinterSeason(4)).toBe(false); // May
       expect(DenverCriticalMass.isWinterSeason(5)).toBe(false); // June
       expect(DenverCriticalMass.isWinterSeason(6)).toBe(false); // July
@@ -178,15 +178,20 @@ describe('DenverCriticalMass', () => {
   });
 
   describe('getEventTimes', () => {
-    it('returns winter times for November-March', () => {
-      const times = DenverCriticalMass.getEventTimes(10); // November
-      expect(times.dayName).toBe('Sunday');
-      expect(times.meetTime).toBe('1:30pm');
-      expect(times.rideTime).toBe('2:00pm');
+    it('returns winter times for November-April', () => {
+      const novemberTimes = DenverCriticalMass.getEventTimes(10); // November
+      expect(novemberTimes.dayName).toBe('Sunday');
+      expect(novemberTimes.meetTime).toBe('12:30pm');
+      expect(novemberTimes.rideTime).toBe('1:00pm');
+
+      const aprilTimes = DenverCriticalMass.getEventTimes(3); // April
+      expect(aprilTimes.dayName).toBe('Sunday');
+      expect(aprilTimes.meetTime).toBe('12:30pm');
+      expect(aprilTimes.rideTime).toBe('1:00pm');
     });
 
-    it('returns summer times for April-October', () => {
-      const times = DenverCriticalMass.getEventTimes(3); // April
+    it('returns summer times for May-October', () => {
+      const times = DenverCriticalMass.getEventTimes(4); // May
       expect(times.dayName).toBe('Friday');
       expect(times.meetTime).toBe('6:30pm');
       expect(times.rideTime).toBe('7:00pm');
@@ -220,8 +225,8 @@ describe('DenverCriticalMass', () => {
       expect(dayEl.innerHTML).toContain('sup');
       expect(yearEl.innerHTML).toBeTruthy();
       expect(dayNameEl.innerHTML).toMatch(/Friday|Sunday/);
-      expect(meetTimeEl.innerHTML).toMatch(/1:30pm|6:30pm/);
-      expect(rideTimeEl.innerHTML).toMatch(/2:00pm|7:00pm/);
+      expect(meetTimeEl.innerHTML).toMatch(/12:30pm|6:30pm/);
+      expect(rideTimeEl.innerHTML).toMatch(/1:00pm|7:00pm/);
     });
 
     it('handles missing DOM elements gracefully', () => {
@@ -254,27 +259,27 @@ describe('DenverCriticalMass', () => {
 
       const novemberTimes = DenverCriticalMass.getEventTimes(novemberEvent.getMonth());
       expect(novemberTimes.dayName).toBe('Sunday');
-      expect(novemberTimes.meetTime).toBe('1:30pm');
+      expect(novemberTimes.meetTime).toBe('12:30pm');
     });
 
-    it('transitions from March (Sunday) to April (Friday)', () => {
-      const marchEvent = DenverCriticalMass.getLastTargetDayOfMonth(new Date(2026, 2, 1));
-      expect(marchEvent.getMonth()).toBe(2);
-      expect(marchEvent.getDate()).toBe(29);
-      expect(marchEvent.getDay()).toBe(0); // Sunday
-
-      const marchTimes = DenverCriticalMass.getEventTimes(marchEvent.getMonth());
-      expect(marchTimes.dayName).toBe('Sunday');
-      expect(marchTimes.meetTime).toBe('1:30pm');
-
+    it('transitions from April (Sunday) to May (Friday)', () => {
       const aprilEvent = DenverCriticalMass.getLastTargetDayOfMonth(new Date(2026, 3, 1));
       expect(aprilEvent.getMonth()).toBe(3);
-      expect(aprilEvent.getDate()).toBe(24);
-      expect(aprilEvent.getDay()).toBe(5); // Friday
+      expect(aprilEvent.getDate()).toBe(26);
+      expect(aprilEvent.getDay()).toBe(0); // Sunday
 
       const aprilTimes = DenverCriticalMass.getEventTimes(aprilEvent.getMonth());
-      expect(aprilTimes.dayName).toBe('Friday');
-      expect(aprilTimes.meetTime).toBe('6:30pm');
+      expect(aprilTimes.dayName).toBe('Sunday');
+      expect(aprilTimes.meetTime).toBe('12:30pm');
+
+      const mayEvent = DenverCriticalMass.getLastTargetDayOfMonth(new Date(2026, 4, 1));
+      expect(mayEvent.getMonth()).toBe(4);
+      expect(mayEvent.getDate()).toBe(29);
+      expect(mayEvent.getDay()).toBe(5); // Friday
+
+      const mayTimes = DenverCriticalMass.getEventTimes(mayEvent.getMonth());
+      expect(mayTimes.dayName).toBe('Friday');
+      expect(mayTimes.meetTime).toBe('6:30pm');
     });
 
     it('transitions from December (Sunday) to January (Sunday) with year rollover', () => {
@@ -286,7 +291,7 @@ describe('DenverCriticalMass', () => {
 
       const decemberTimes = DenverCriticalMass.getEventTimes(decemberEvent.getMonth());
       expect(decemberTimes.dayName).toBe('Sunday');
-      expect(decemberTimes.meetTime).toBe('1:30pm');
+      expect(decemberTimes.meetTime).toBe('12:30pm');
 
       const januaryEvent = DenverCriticalMass.getLastTargetDayOfMonth(new Date(2026, 0, 1));
       expect(januaryEvent.getMonth()).toBe(0);
@@ -296,7 +301,7 @@ describe('DenverCriticalMass', () => {
 
       const januaryTimes = DenverCriticalMass.getEventTimes(januaryEvent.getMonth());
       expect(januaryTimes.dayName).toBe('Sunday');
-      expect(januaryTimes.meetTime).toBe('1:30pm');
+      expect(januaryTimes.meetTime).toBe('12:30pm');
     });
   });
 });
