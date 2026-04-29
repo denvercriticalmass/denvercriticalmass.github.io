@@ -7,6 +7,14 @@ summary {
   cursor: pointer;
 }
 
+a[href]:focus-visible,
+button:not(:disabled):focus-visible,
+[role="button"]:focus-visible,
+summary:focus-visible {
+  outline: 3px solid #171717;
+  outline-offset: 2px;
+}
+
 @keyframes world-bubble-float {
   0%,
   100% {
