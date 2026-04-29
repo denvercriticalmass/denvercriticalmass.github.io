@@ -11,12 +11,10 @@ const DenverCriticalMass = (() => {
     };
   };
 
-  const getOrdinalSuffix = (day) => {
-    const suffixes = { one: "st", two: "nd", few: "rd", other: "th" };
-    const rules = new Intl.PluralRules("en", { type: "ordinal" });
-    const ordinal = rules.select(day);
-    return suffixes[ordinal] || suffixes.other;
-  };
+  const ordinalRules = new Intl.PluralRules("en", { type: "ordinal" });
+  const ordinalSuffixes = { one: "st", two: "nd", few: "rd", other: "th" };
+
+  const getOrdinalSuffix = (day) => ordinalSuffixes[ordinalRules.select(day)] ?? ordinalSuffixes.other;
 
   const formatDayWithOrdinal = (day) => {
     if (typeof day !== "number" || day < 1) {
