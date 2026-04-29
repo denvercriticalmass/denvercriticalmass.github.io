@@ -3,19 +3,14 @@ import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 
-// Get the current directory in ES modules
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-// Load and execute the main.js file from public directory
 const mainJsPath = path.join(__dirname, '../public/main.js');
 const mainJsCode = fs.readFileSync(mainJsPath, 'utf-8');
 
-// Create a module context and execute
 const module = { exports: {} };
 const func = new Function('module', 'exports', 'window', mainJsCode);
-
-// Execute in a fake window context
 const fakeWindow = { addEventListener: () => {} };
 func(module, module.exports, fakeWindow);
 
@@ -232,7 +227,6 @@ describe('DenverCriticalMass', () => {
 
   describe('updateDOM', () => {
     beforeEach(() => {
-      // Set up the DOM with happy-dom (provided by vitest environment)
       document.body.innerHTML = `
         <span data-month></span>
         <span data-day></span>
@@ -262,7 +256,7 @@ describe('DenverCriticalMass', () => {
     });
 
     it('handles missing DOM elements gracefully', () => {
-      document.body.innerHTML = ''; // Empty DOM
+      document.body.innerHTML = '';
 
       const consoleSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
 

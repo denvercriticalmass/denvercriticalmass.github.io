@@ -1,6 +1,5 @@
 "use strict";
 
-// Export functions for testing
 const DenverCriticalMass = (() => {
   const formatDate = (date) => {
     const formatter = new Intl.DateTimeFormat("en", { dateStyle: "full" });
@@ -40,17 +39,13 @@ const DenverCriticalMass = (() => {
     const year = date.getFullYear();
     const month = date.getMonth();
     const targetDay = getTargetDayOfWeek(month);
-    const lastDay = new Date(year, month + 1, 0); // Last day of the month
+    const lastDay = new Date(year, month + 1, 0); // Day 0 of next month = last day of this month
 
-    // Calculate the last occurrence of target day in the month
     let lastTargetDay = new Date(lastDay);
     const daysToSubtract = (lastDay.getDay() - targetDay + 7) % 7;
     lastTargetDay.setDate(lastDay.getDate() - daysToSubtract);
-
-    // Set the time to the end of the day (23:59:59.999)
     lastTargetDay.setHours(23, 59, 59, 999);
 
-    // If the current date is after the last target day, move to the next month
     if (date > lastTargetDay) {
       return getLastTargetDayOfMonth(new Date(year, month + 1, 1));
     }
@@ -819,13 +814,8 @@ const DenverCriticalMass = (() => {
     meetTimeEl.innerHTML = times.meetTime;
     rideTimeEl.innerHTML = times.rideTime;
 
-    // Show winter hours announcement only during winter season
     if (winterHoursEl) {
-      if (isWinterSeason(targetMonth)) {
-        winterHoursEl.innerHTML = "Winter Hours: Sundays";
-      } else {
-        winterHoursEl.innerHTML = "";
-      }
+      winterHoursEl.innerHTML = isWinterSeason(targetMonth) ? "Winter Hours: Sundays" : "";
     }
   };
 
@@ -859,7 +849,6 @@ if (typeof window !== "undefined") {
   }
 }
 
-// Export for testing (CommonJS and ES modules)
 if (typeof module !== "undefined" && module.exports) {
   module.exports = DenverCriticalMass;
 }
