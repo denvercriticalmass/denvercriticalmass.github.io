@@ -10,11 +10,17 @@
   <body
     class="season-page min-h-screen bg-[#f6f0e4] text-neutral-950 antialiased dark:bg-[#111513] dark:text-stone-100"
   >
+    <a
+      href="#main"
+      class="sr-only focus:not-sr-only focus:fixed focus:top-2 focus:left-2 focus:z-50 focus:border-2 focus:border-neutral-950 focus:bg-white focus:px-4 focus:py-2 focus:font-black focus:text-neutral-950 focus:shadow-[4px_4px_0_#171717]"
+      >Skip to main content</a
+    >
     <header
       class="season-hero border-b-4 border-neutral-950 bg-[#f6f0e4] dark:border-stone-100 dark:bg-[#111513]"
     >
       <div class="mx-auto max-w-6xl px-5 py-5 sm:px-8">
         <nav
+          aria-label="Primary"
           class="flex items-center justify-between gap-4 text-sm font-bold tracking-wide uppercase"
         >
           <a href="/" class="text-neutral-950 no-underline dark:text-stone-100"
@@ -82,7 +88,8 @@
             </div>
           </div>
 
-          <aside
+          <section
+            aria-labelledby="next-ride-heading"
             class="ride-card border-2 border-neutral-950 bg-white p-5 shadow-[8px_8px_0_#171717] dark:border-stone-100 dark:bg-[#1d211f] dark:shadow-[8px_8px_0_#f5f5f4]"
           >
             <div
@@ -90,6 +97,7 @@
               class="winter-hours-animate mb-4 text-sm font-black text-[#d62828] uppercase dark:text-[#f9c74f]"
             ></div>
             <p
+              id="next-ride-heading"
               class="text-xs font-black tracking-wide text-neutral-500 uppercase dark:text-stone-400"
             >
               Next ride
@@ -139,12 +147,12 @@
                 In front of West High School on Elati St.
               </p>
             </div>
-          </aside>
+          </section>
         </div>
       </div>
     </header>
 
-    <main>
+    <main id="main">
       <section
         class="season-section season-map-section border-b-4 border-neutral-950 bg-[#fffaf0] dark:border-stone-100 dark:bg-[#171b19]"
       >
@@ -168,12 +176,14 @@
             class="season-map-frame overflow-hidden border-2 border-neutral-950 bg-white shadow-[6px_6px_0_#171717] dark:border-stone-100 dark:bg-[#1d211f] dark:shadow-[6px_6px_0_#f5f5f4]"
           >
             <iframe
+              title="Map showing Sunken Gardens Park, the meeting location"
               class="h-[340px] w-full md:h-[420px]"
               src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d6136.739757545797!2d-104.9933855!3d39.7313416!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x876c7f2eb87c5469%3A0xc9d3bfb96bb901b4!2sSunken%20Gardens%20Park!5e0!3m2!1sen!2sus!4v1722537369696!5m2!1sen!2sus"
               style="border: 0"
-              allowfullscreen=""
               loading="lazy"
-              referrerpolicy="no-referrer-when-downgrade"
+              referrerpolicy="strict-origin-when-cross-origin"
+              sandbox="allow-scripts allow-same-origin allow-popups allow-forms"
+              allow="fullscreen"
             ></iframe>
           </div>
         </div>
@@ -409,11 +419,7 @@
               </div>
             </div>
 
-            <div
-              class="world-cloud"
-              data-world-cloud
-              aria-label="Critical Mass city examples from around the world"
-            >
+            <div class="world-cloud" data-world-cloud aria-hidden="true">
               <span class="world-bubble world-bubble--fallback">San Francisco</span>
               <span class="world-bubble world-bubble--fallback">Chicago</span>
               <span class="world-bubble world-bubble--fallback">Guadalajara</span>
@@ -447,13 +453,13 @@
 
           <div class="grid gap-4 sm:grid-cols-2">
             <div class="border-2 border-white p-5 dark:border-neutral-950">
-              <p class="text-base font-black sm:text-lg">Say "Happy Friday"</p>
+              <h3 class="text-base font-black sm:text-lg">Say "Happy Friday"</h3>
               <p class="mt-2 text-stone-300 dark:text-neutral-700">
                 Ring your bells, make friends, and bring good energy.
               </p>
             </div>
             <div class="border-2 border-white p-5 dark:border-neutral-950">
-              <p class="text-base font-black sm:text-lg">Find more rides</p>
+              <h3 class="text-base font-black sm:text-lg">Find more rides</h3>
               <p class="mt-2 text-stone-300 dark:text-neutral-700">
                 Use
                 <a
@@ -467,13 +473,13 @@
               </p>
             </div>
             <div class="border-2 border-white p-5 dark:border-neutral-950">
-              <p class="text-base font-black sm:text-lg">Speak up</p>
+              <h3 class="text-base font-black sm:text-lg">Speak up</h3>
               <p class="mt-2 text-stone-300 dark:text-neutral-700">
                 We want the ride to feel safe enough that anyone can name an issue.
               </p>
             </div>
             <div class="border-2 border-white p-5 dark:border-neutral-950">
-              <p class="text-base font-black sm:text-lg">Repair with kindness</p>
+              <h3 class="text-base font-black sm:text-lg">Repair with kindness</h3>
               <p class="mt-2 text-stone-300 dark:text-neutral-700">
                 If someone raises a concern about your behavior, hear them out and repair it.
               </p>
