@@ -3,9 +3,16 @@
   "module": "index.ts",
   "type": "module",
   "devDependencies": {
+    "@eslint/js": "^10.0.1",
     "@tailwindcss/vite": "^4.1.17",
     "@vitest/ui": "^4.0.13",
+    "eslint": "^10.2.1",
+    "globals": "^17.5.0",
     "happy-dom": "^20.0.10",
+    "lint-staged": "^16.4.0",
+    "prettier": "^3.8.3",
+    "prettier-plugin-tailwindcss": "^0.8.0",
+    "simple-git-hooks": "^2.13.1",
     "tailwindcss": "^4.1.17",
     "typescript": "^5.9.3",
     "vite": "^7.2.4",
@@ -17,6 +24,22 @@
     "build": "tsc && vite build",
     "test": "vitest",
     "test:ui": "vitest --ui",
-    "test:run": "vitest run"
+    "test:run": "vitest run",
+    "lint": "eslint .",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "prepare": "simple-git-hooks"
+  },
+  "simple-git-hooks": {
+    "pre-commit": "npx lint-staged"
+  },
+  "lint-staged": {
+    "*.{js,ts}": [
+      "prettier --write",
+      "eslint --fix"
+    ],
+    "*.{css,html,json,md}": [
+      "prettier --write"
+    ]
   }
 }
