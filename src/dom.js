@@ -10,6 +10,9 @@ import {
 const SNOWFLAKE_COUNT = 35;
 const SNOWFLAKE_CHARS = ["❄", "❅", "❆"];
 
+const BIRD_COUNT = 10;
+const BIRD_SVG = `<svg viewBox="0 0 28 14" aria-hidden="true"><path d="M2 10 Q7 2 12 8 Q14 9 16 8 Q21 2 26 10" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+
 const renderSnowfall = (active) => {
   const container = document.querySelector("[data-snowfall]");
   if (!container) return;
@@ -28,6 +31,26 @@ const renderSnowfall = (active) => {
     flake.style.setProperty("--drift-delay", `-${(Math.random() * 4).toFixed(1)}s`);
     flake.style.setProperty("--drift", `${((Math.random() - 0.5) * 4).toFixed(2)}rem`);
     container.appendChild(flake);
+  }
+};
+
+const renderBirdfly = (active) => {
+  const container = document.querySelector("[data-birdfly]");
+  if (!container) return;
+  container.replaceChildren();
+  if (!active) return;
+
+  for (let i = 0; i < BIRD_COUNT; i += 1) {
+    const bird = document.createElement("span");
+    bird.className = "bird";
+    bird.innerHTML = BIRD_SVG;
+    bird.style.setProperty("--y", `${(5 + Math.random() * 55).toFixed(1)}%`);
+    bird.style.setProperty("--size", `${(1.2 + Math.random() * 1.6).toFixed(2)}rem`);
+    bird.style.setProperty("--fly-duration", `${(18 + Math.random() * 22).toFixed(1)}s`);
+    bird.style.setProperty("--fly-delay", `-${(Math.random() * 30).toFixed(1)}s`);
+    bird.style.setProperty("--bob-duration", `${(1.5 + Math.random() * 2).toFixed(1)}s`);
+    bird.style.setProperty("--bob-delay", `-${(Math.random() * 2).toFixed(1)}s`);
+    container.appendChild(bird);
   }
 };
 
@@ -66,4 +89,5 @@ export const updateDOM = () => {
   }
 
   renderSnowfall(winter);
+  renderBirdfly(!winter);
 };
