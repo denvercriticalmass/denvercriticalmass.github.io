@@ -11,7 +11,7 @@ const SNOWFLAKE_COUNT = 35;
 const SNOWFLAKE_CHARS = ["❄", "❅", "❆"];
 
 const BIRD_COUNT = 10;
-const BIRD_SVG = `<svg viewBox="0 0 28 14" aria-hidden="true"><path d="M2 10 Q7 2 12 8 Q14 9 16 8 Q21 2 26 10" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+const BIRD_SVG = `<svg viewBox="0 0 32 16" aria-hidden="true"><path d="M2 11 Q8 1 14 9 Q16 11 18 9 Q24 1 30 11" stroke="currentColor" stroke-width="2.2" fill="none" stroke-linecap="round" stroke-linejoin="round"/><circle cx="16" cy="9.5" r="1.4" fill="currentColor"/></svg>`;
 
 const renderSnowfall = (active) => {
   const container = document.querySelector("[data-snowfall]");

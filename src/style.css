@@ -276,11 +276,10 @@ summary:focus-visible {
 }
 
 [data-snowfall] {
-  position: fixed;
+  position: absolute;
   inset: 0;
   pointer-events: none;
-  overflow: hidden;
-  z-index: 1;
+  z-index: 0;
 }
 
 .snowflake {
@@ -311,11 +310,10 @@ summary:focus-visible {
 }
 
 [data-birdfly] {
-  position: fixed;
+  position: absolute;
   inset: 0;
   pointer-events: none;
-  overflow: hidden;
-  z-index: 1;
+  z-index: 0;
 }
 
 .bird {
