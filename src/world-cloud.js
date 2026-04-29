@@ -7,9 +7,39 @@ import {
 const SHORT_NAME = 7;
 const MEDIUM_NAME = 13;
 const LONG_NAME = 20;
+const MAX_PER_CONTINENT = 3;
 
 let activeTimer;
 let activeInteractionCleanup;
+
+const shuffle = (arr) => {
+  const a = [...arr];
+  for (let i = a.length - 1; i > 0; i -= 1) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+};
+
+const pickAvailable = (pool, shown, counts) => {
+  const shuffled = shuffle(pool);
+  for (const entry of shuffled) {
+    if (shown.has(entry.city)) continue;
+    if ((counts.get(entry.continent) ?? 0) >= MAX_PER_CONTINENT) continue;
+    return entry;
+  }
+  return shuffled.find((entry) => !shown.has(entry.city)) ?? null;
+};
+
+const claim = (entry, shown, counts) => {
+  shown.add(entry.city);
+  counts.set(entry.continent, (counts.get(entry.continent) ?? 0) + 1);
+};
+
+const release = (city, continent, shown, counts) => {
+  shown.delete(city);
+  counts.set(continent, Math.max(0, (counts.get(continent) ?? 0) - 1));
+};
 
 export const getWorldCloudRows = () =>
   worldCloudRows.map((row) => ({ continent: row.continent, cities: [...row.cities] }));
@@ -181,12 +211,7 @@ const initializeRepel = (cloud, bubbles) => {
   };
 };
 
-const startCityRotation = (bubbles, positions, cityPool) => {
-  const queue = cityPool
-    .map((entry, index) => ({ entry, sort: (index * 37) % cityPool.length }))
-    .sort((a, b) => a.sort - b.sort)
-    .map(({ entry }) => entry);
-  let queueIndex = bubbles.length;
+const startCityRotation = (bubbles, positions, cityPool, shown, continentCounts) => {
   let positionOffset = 3;
 
   return window.setInterval(() => {
@@ -195,13 +220,19 @@ const startCityRotation = (bubbles, positions, cityPool) => {
     const staggers = buildStaggers(bubbleIndexes.length);
 
     bubbleIndexes.forEach((bubbleIndex, i) => {
-      const currentQueueIndex = queueIndex + i;
       const bubble = bubbles[bubbleIndex];
-      const entry = queue[currentQueueIndex % queue.length];
-      const nextPosition = jitterPosition(
-        positions[bubbleIndex],
-        currentQueueIndex + positionOffset,
-      );
+      const oldCity = bubble.textContent;
+      const oldContinent = bubble.dataset.continent;
+
+      release(oldCity, oldContinent, shown, continentCounts);
+      const entry = pickAvailable(cityPool, shown, continentCounts);
+      if (!entry) {
+        claim({ city: oldCity, continent: oldContinent }, shown, continentCounts);
+        return;
+      }
+      claim(entry, shown, continentCounts);
+
+      const nextPosition = jitterPosition(positions[bubbleIndex], i + positionOffset);
 
       window.setTimeout(() => {
         bubble.classList.add("is-changing");
@@ -215,7 +246,6 @@ const startCityRotation = (bubbles, positions, cityPool) => {
       }, staggers[i]);
     });
 
-    queueIndex += bubbleIndexes.length;
     positionOffset = (positionOffset + 2) % positions.length;
   }, 9000);
 };
@@ -237,9 +267,12 @@ export const initializeWorldCloud = () => {
   cleanupInteraction();
   cloud.replaceChildren();
 
+  const shown = new Set();
+  const continentCounts = new Map();
   const bubbles = positions.map((position, index) => {
-    const entry = cityPool[(index * 11) % cityPool.length];
-    const bubble = createBubble(entry, position);
+    const entry = pickAvailable(cityPool, shown, continentCounts);
+    if (entry) claim(entry, shown, continentCounts);
+    const bubble = createBubble(entry ?? cityPool[0], position);
     bubble.style.setProperty("--delay", `-${1600 + index * 730}ms`);
     cloud.appendChild(bubble);
     return bubble;
@@ -247,7 +280,6 @@ export const initializeWorldCloud = () => {
 
   if (reducedMotion) return;
 
-  cleanupInteraction();
   if (!isMobile()) initializeRepel(cloud, bubbles);
-  activeTimer = startCityRotation(bubbles, positions, cityPool);
+  activeTimer = startCityRotation(bubbles, positions, cityPool, shown, continentCounts);
 };
