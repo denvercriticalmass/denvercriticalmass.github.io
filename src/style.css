@@ -216,6 +216,11 @@ summary:focus-visible {
     max-width: 10rem;
     padding: 0.48rem 0.62rem;
     font-size: 0.62rem;
+    pointer-events: auto;
+    cursor: grab;
+    touch-action: none;
+    -webkit-user-select: none;
+    user-select: none;
   }
 
   .world-bubble[data-size="tiny"],

@@ -125,6 +125,159 @@ const cleanupInteraction = () => {
   activeInteractionCleanup = null;
 };
 
+const initializeDrag = (bubbles) => {
+  const states = bubbles.map((bubble) => ({
+    bubble,
+    x: 0,
+    y: 0,
+    vx: 0,
+    vy: 0,
+    targetX: 0,
+    targetY: 0,
+    startX: 0,
+    startY: 0,
+    startOffsetX: 0,
+    startOffsetY: 0,
+    dragging: false,
+  }));
+  const stateByBubble = new Map(states.map((s) => [s.bubble, s]));
+  const activeDrags = new Map();
+  let frame = null;
+  let topZIndex = 10;
+
+  const limitOffset = (x, y) => {
+    const distance = Math.hypot(x, y);
+    const maxDrag = clamp(window.innerWidth * 0.12, 34, 52);
+    if (distance <= maxDrag || distance === 0) return { x, y };
+    const scale = maxDrag / distance;
+    return { x: x * scale, y: y * scale };
+  };
+
+  const tick = () => {
+    let moving = false;
+
+    states.forEach((state) => {
+      const spring = state.dragging ? 0.2 : 0.08;
+      const damping = state.dragging ? 0.62 : 0.78;
+      state.vx = (state.vx + (state.targetX - state.x) * spring) * damping;
+      state.vy = (state.vy + (state.targetY - state.y) * spring) * damping;
+      state.x += state.vx;
+      state.y += state.vy;
+
+      if (!state.dragging && Math.abs(state.x) < 0.03 && Math.abs(state.vx) < 0.03) {
+        state.x = 0;
+        state.vx = 0;
+      }
+      if (!state.dragging && Math.abs(state.y) < 0.03 && Math.abs(state.vy) < 0.03) {
+        state.y = 0;
+        state.vy = 0;
+      }
+
+      setOffset(state.bubble, state.x, state.y);
+
+      if (
+        state.dragging ||
+        Math.abs(state.x - state.targetX) > 0.08 ||
+        Math.abs(state.y - state.targetY) > 0.08 ||
+        Math.abs(state.vx) > 0.08 ||
+        Math.abs(state.vy) > 0.08
+      ) {
+        moving = true;
+      }
+    });
+
+    frame = moving ? window.requestAnimationFrame(tick) : null;
+  };
+
+  const startTicking = () => {
+    if (!frame) frame = window.requestAnimationFrame(tick);
+  };
+
+  const handlePointerDown = (event) => {
+    if (!isMobile()) return;
+    const state = stateByBubble.get(event.currentTarget);
+    if (!state) return;
+
+    event.preventDefault();
+    state.dragging = true;
+    state.startX = event.clientX;
+    state.startY = event.clientY;
+    state.startOffsetX = state.targetX;
+    state.startOffsetY = state.targetY;
+    state.bubble.classList.add("is-dragging");
+    topZIndex += 1;
+    state.bubble.style.zIndex = String(topZIndex);
+    activeDrags.set(event.pointerId, state);
+
+    if (state.bubble.setPointerCapture) {
+      state.bubble.setPointerCapture(event.pointerId);
+    }
+    startTicking();
+  };
+
+  const handlePointerMove = (event) => {
+    const state = activeDrags.get(event.pointerId);
+    if (!state) return;
+
+    event.preventDefault();
+    const next = limitOffset(
+      state.startOffsetX + event.clientX - state.startX,
+      state.startOffsetY + event.clientY - state.startY,
+    );
+    state.targetX = next.x;
+    state.targetY = next.y;
+    startTicking();
+  };
+
+  const finishDrag = (event) => {
+    const state = activeDrags.get(event.pointerId);
+    if (!state) return;
+
+    activeDrags.delete(event.pointerId);
+    state.dragging = false;
+    state.targetX = 0;
+    state.targetY = 0;
+    state.bubble.classList.remove("is-dragging");
+
+    if (state.bubble.releasePointerCapture && state.bubble.hasPointerCapture?.(event.pointerId)) {
+      state.bubble.releasePointerCapture(event.pointerId);
+    }
+    startTicking();
+  };
+
+  const releaseAll = () => {
+    activeDrags.clear();
+    states.forEach((state) => {
+      state.dragging = false;
+      state.targetX = 0;
+      state.targetY = 0;
+      state.bubble.classList.remove("is-dragging");
+    });
+    startTicking();
+  };
+
+  bubbles.forEach((bubble) => bubble.addEventListener("pointerdown", handlePointerDown));
+  window.addEventListener("pointermove", handlePointerMove);
+  window.addEventListener("pointerup", finishDrag);
+  window.addEventListener("pointercancel", finishDrag);
+  window.addEventListener("blur", releaseAll);
+
+  activeInteractionCleanup = () => {
+    bubbles.forEach((bubble) => {
+      bubble.removeEventListener("pointerdown", handlePointerDown);
+      bubble.classList.remove("is-dragging");
+    });
+    window.removeEventListener("pointermove", handlePointerMove);
+    window.removeEventListener("pointerup", finishDrag);
+    window.removeEventListener("pointercancel", finishDrag);
+    window.removeEventListener("blur", releaseAll);
+    if (frame) window.cancelAnimationFrame(frame);
+    states.forEach((state) => setOffset(state.bubble, 0, 0));
+    activeDrags.clear();
+    frame = null;
+  };
+};
+
 const initializeRepel = (cloud, bubbles) => {
   const states = bubbles.map((bubble) => ({ bubble, x: 0, y: 0, targetX: 0, targetY: 0 }));
   const pointer = { active: false, x: 0, y: 0 };
@@ -235,6 +388,7 @@ const startCityRotation = (bubbles, positions, cityPool, shown, continentCounts)
       const nextPosition = jitterPosition(positions[bubbleIndex], i + positionOffset);
 
       window.setTimeout(() => {
+        if (bubble.classList.contains("is-dragging")) return;
         bubble.classList.add("is-changing");
         window.setTimeout(() => {
           applyPosition(bubble, nextPosition);
@@ -280,6 +434,7 @@ export const initializeWorldCloud = () => {
 
   if (reducedMotion) return;
 
-  if (!isMobile()) initializeRepel(cloud, bubbles);
+  if (isMobile()) initializeDrag(bubbles);
+  else initializeRepel(cloud, bubbles);
   activeTimer = startCityRotation(bubbles, positions, cityPool, shown, continentCounts);
 };
