@@ -5,23 +5,24 @@ describe("updateDOM", () => {
   beforeEach(() => {
     document.body.innerHTML = `
       <span data-month></span>
-      <span data-day></span>
+      <span data-day-plain></span>
       <span data-year></span>
       <span data-day-name></span>
       <span data-meet-time></span>
       <span data-ride-time></span>
+      <div data-winter-hours></div>
     `;
   });
 
   it("updates DOM elements with correct values", () => {
     updateDOM();
 
-    expect(document.querySelector("[data-month]").innerHTML).toBeTruthy();
-    expect(document.querySelector("[data-day]").innerHTML).toContain("sup");
-    expect(document.querySelector("[data-year]").innerHTML).toBeTruthy();
-    expect(document.querySelector("[data-day-name]").innerHTML).toMatch(/Friday|Sunday/);
-    expect(document.querySelector("[data-meet-time]").innerHTML).toMatch(/12:30pm|6:30pm/);
-    expect(document.querySelector("[data-ride-time]").innerHTML).toMatch(/1:00pm|7:00pm/);
+    expect(document.querySelector("[data-month]").textContent).toBeTruthy();
+    expect(document.querySelector("[data-day-plain]").textContent).toMatch(/\d+(st|nd|rd|th)/);
+    expect(document.querySelector("[data-year]").textContent).toBeTruthy();
+    expect(document.querySelector("[data-day-name]").textContent).toMatch(/Friday|Sunday/);
+    expect(document.querySelector("[data-meet-time]").textContent).toMatch(/12:30pm|6:30pm/);
+    expect(document.querySelector("[data-ride-time]").textContent).toMatch(/1:00pm|7:00pm/);
   });
 
   it("handles missing DOM elements gracefully", () => {

@@ -1,4 +1,4 @@
-import { formatDate, formatDayWithOrdinal, getOrdinalSuffix } from "./date.js";
+import { formatDate, getOrdinalSuffix } from "./date.js";
 import {
   getEventTimes,
   getLastTargetDayOfMonth,
@@ -9,15 +9,14 @@ import {
 
 export const updateDOM = () => {
   const monthEl = document.querySelector("[data-month]");
-  const dayEl = document.querySelector("[data-day]");
-  const dayPlainEl = document.querySelector("[data-day-plain]");
+  const dayEl = document.querySelector("[data-day-plain]");
   const yearEl = document.querySelector("[data-year]");
   const dayNameEl = document.querySelector("[data-day-name]");
   const meetTimeEl = document.querySelector("[data-meet-time]");
   const rideTimeEl = document.querySelector("[data-ride-time]");
   const winterHoursEl = document.querySelector("[data-winter-hours]");
 
-  if (!monthEl || (!dayEl && !dayPlainEl) || !yearEl || !dayNameEl || !meetTimeEl || !rideTimeEl) {
+  if (!monthEl || !dayEl || !yearEl || !dayNameEl || !meetTimeEl || !rideTimeEl) {
     console.error("Required DOM elements not found");
     return;
   }
@@ -30,15 +29,14 @@ export const updateDOM = () => {
 
   updateSeasonTheme(eventMonth);
 
-  monthEl.innerHTML = month;
-  if (dayEl) dayEl.innerHTML = formatDayWithOrdinal(day);
-  if (dayPlainEl) dayPlainEl.textContent = `${day}${getOrdinalSuffix(day)}`;
-  yearEl.innerHTML = year;
-  dayNameEl.innerHTML = times.dayName;
-  meetTimeEl.innerHTML = times.meetTime;
-  rideTimeEl.innerHTML = times.rideTime;
+  monthEl.textContent = month;
+  dayEl.textContent = `${day}${getOrdinalSuffix(day)}`;
+  yearEl.textContent = String(year);
+  dayNameEl.textContent = times.dayName;
+  meetTimeEl.textContent = times.meetTime;
+  rideTimeEl.textContent = times.rideTime;
 
   if (winterHoursEl) {
-    winterHoursEl.innerHTML = isWinterSeason(eventMonth) ? "Winter Hours: Sundays" : "";
+    winterHoursEl.textContent = isWinterSeason(eventMonth) ? "Winter Hours: Sundays" : "";
   }
 };
