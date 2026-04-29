@@ -79,7 +79,8 @@ const DenverCriticalMass = (() => {
 	};
 
 		let worldCloudTimer;
-		let worldRepelCleanup;
+		let worldBubbleInteractionCleanup;
+		let worldBubbleTopZIndex = 10;
 
 	const worldCloudRows = [
 	  {
@@ -320,32 +321,36 @@ const DenverCriticalMass = (() => {
 	];
 
 	const mobileWorldBubblePositions = [
-	  { x: 20, y: 12, size: "medium", tilt: -4 },
-	  { x: 63, y: 10, size: "small", tilt: 3 },
-	  { x: 42, y: 24, size: "large", tilt: -1 },
-	  { x: 78, y: 34, size: "small", tilt: 5 },
-	  { x: 22, y: 42, size: "small", tilt: 4 },
-	  { x: 56, y: 50, size: "medium", tilt: 2 },
-	  { x: 34, y: 64, size: "large", tilt: -3 },
-	  { x: 68, y: 62, size: "small", tilt: 4 },
-	  { x: 75, y: 72, size: "tiny", tilt: -2 },
-	  { x: 24, y: 84, size: "small", tilt: 3 },
-	  { x: 58, y: 88, size: "medium", tilt: -5 },
-	  { x: 82, y: 90, size: "small", tilt: 2 },
+	  { x: 14, y: 12, size: "medium", tilt: -4 },
+	  { x: 58, y: 9, size: "small", tilt: 3 },
+	  { x: 36, y: 24, size: "large", tilt: -1 },
+	  { x: 81, y: 32, size: "small", tilt: 5 },
+	  { x: 12, y: 40, size: "small", tilt: 4 },
+	  { x: 55, y: 49, size: "medium", tilt: 2 },
+	  { x: 30, y: 61, size: "large", tilt: -3 },
+	  { x: 70, y: 63, size: "small", tilt: 4 },
+	  { x: 86, y: 73, size: "tiny", tilt: -2 },
+	  { x: 15, y: 84, size: "small", tilt: 3 },
+	  { x: 55, y: 88, size: "medium", tilt: -5 },
+	  { x: 80, y: 91, size: "small", tilt: 2 },
 	];
 
 	const getWorldCityPool = () => worldCloudRows.flatMap((row) => (
 	  row.cities.map((city) => ({ city, modifier: row.modifier }))
 	));
 
+	const clamp = (value, min, max) => Math.min(Math.max(value, min), max);
+
+	const isMobileWorldCloud = () => (
+	  typeof window !== "undefined"
+	  && window.matchMedia
+	  && window.matchMedia("(max-width: 640px)").matches
+	);
+
 	const getActiveWorldBubblePositions = () => {
-	  if (typeof window !== "undefined" && window.matchMedia && window.matchMedia("(max-width: 640px)").matches) {
-	    return mobileWorldBubblePositions;
-	  }
+	  if (isMobileWorldCloud()) return mobileWorldBubblePositions;
 	  return worldBubblePositions;
 	};
-
-	const clamp = (value, min, max) => Math.min(Math.max(value, min), max);
 
 	const getJitteredBubblePosition = (position, seed) => {
 	  const xJitter = (((seed * 17) % 7) - 3) * 0.35;
@@ -415,9 +420,183 @@ const DenverCriticalMass = (() => {
 	  return bubble;
 	};
 
+	const setBubbleInteractionOffset = (bubble, x, y) => {
+	  bubble.style.setProperty("--repel-x", `${x.toFixed(2)}px`);
+	  bubble.style.setProperty("--repel-y", `${y.toFixed(2)}px`);
+	};
+
+	const resetWorldBubbleInteraction = () => {
+	  if (!worldBubbleInteractionCleanup) return;
+	  worldBubbleInteractionCleanup();
+	  worldBubbleInteractionCleanup = null;
+	};
+
+	const initializeWorldBubbleDrag = (bubbles) => {
+	  if (typeof window === "undefined") return;
+
+	  const states = bubbles.map((bubble) => ({
+	    bubble,
+	    x: 0,
+	    y: 0,
+	    vx: 0,
+	    vy: 0,
+	    targetX: 0,
+	    targetY: 0,
+	    startX: 0,
+	    startY: 0,
+	    startOffsetX: 0,
+	    startOffsetY: 0,
+	    dragging: false,
+	  }));
+	  const stateByBubble = new Map(states.map((state) => [state.bubble, state]));
+	  const activeDrags = new Map();
+	  let frame = null;
+
+	  const getMaxDrag = () => clamp(window.innerWidth * 0.12, 34, 52);
+	  const limitOffset = (x, y) => {
+	    const distance = Math.hypot(x, y);
+	    const maxDrag = getMaxDrag();
+	    if (distance <= maxDrag || distance === 0) return { x, y };
+	    const scale = maxDrag / distance;
+	    return {
+	      x: x * scale,
+	      y: y * scale,
+	    };
+	  };
+
+	  const tick = () => {
+	    let moving = false;
+
+	    states.forEach((state) => {
+	      const spring = state.dragging ? 0.2 : 0.08;
+	      const damping = state.dragging ? 0.62 : 0.78;
+	      state.vx = (state.vx + (state.targetX - state.x) * spring) * damping;
+	      state.vy = (state.vy + (state.targetY - state.y) * spring) * damping;
+	      state.x += state.vx;
+	      state.y += state.vy;
+
+	      if (!state.dragging && Math.abs(state.x) < 0.03 && Math.abs(state.vx) < 0.03) {
+	        state.x = 0;
+	        state.vx = 0;
+	      }
+	      if (!state.dragging && Math.abs(state.y) < 0.03 && Math.abs(state.vy) < 0.03) {
+	        state.y = 0;
+	        state.vy = 0;
+	      }
+
+	      setBubbleInteractionOffset(state.bubble, state.x, state.y);
+
+	      if (
+	        state.dragging
+	        || Math.abs(state.x - state.targetX) > 0.08
+	        || Math.abs(state.y - state.targetY) > 0.08
+	        || Math.abs(state.vx) > 0.08
+	        || Math.abs(state.vy) > 0.08
+	      ) {
+	        moving = true;
+	      }
+	    });
+
+	    if (moving) {
+	      frame = window.requestAnimationFrame(tick);
+	    } else {
+	      frame = null;
+	    }
+	  };
+
+	  const startTicking = () => {
+	    if (!frame) frame = window.requestAnimationFrame(tick);
+	  };
+
+	  const handlePointerDown = (event) => {
+	    if (!isMobileWorldCloud()) return;
+	    const state = stateByBubble.get(event.currentTarget);
+	    if (!state) return;
+
+	    event.preventDefault();
+	    state.dragging = true;
+	    state.startX = event.clientX;
+	    state.startY = event.clientY;
+	    state.startOffsetX = state.targetX;
+	    state.startOffsetY = state.targetY;
+	    state.bubble.classList.add("is-dragging");
+	    worldBubbleTopZIndex += 1;
+	    state.bubble.style.zIndex = String(worldBubbleTopZIndex);
+	    activeDrags.set(event.pointerId, state);
+
+	    if (state.bubble.setPointerCapture) {
+	      state.bubble.setPointerCapture(event.pointerId);
+	    }
+	    startTicking();
+	  };
+
+	  const handlePointerMove = (event) => {
+	    const state = activeDrags.get(event.pointerId);
+	    if (!state) return;
+
+	    event.preventDefault();
+	    const nextOffset = limitOffset(
+	      state.startOffsetX + event.clientX - state.startX,
+	      state.startOffsetY + event.clientY - state.startY,
+	    );
+	    state.targetX = nextOffset.x;
+	    state.targetY = nextOffset.y;
+	    startTicking();
+	  };
+
+	  const finishDrag = (event) => {
+	    const state = activeDrags.get(event.pointerId);
+	    if (!state) return;
+
+	    activeDrags.delete(event.pointerId);
+	    state.dragging = false;
+	    state.targetX = 0;
+	    state.targetY = 0;
+	    state.bubble.classList.remove("is-dragging");
+
+	    if (state.bubble.releasePointerCapture && state.bubble.hasPointerCapture?.(event.pointerId)) {
+	      state.bubble.releasePointerCapture(event.pointerId);
+	    }
+	    startTicking();
+	  };
+
+	  const releaseAll = () => {
+	    activeDrags.clear();
+	    states.forEach((state) => {
+	      state.dragging = false;
+	      state.targetX = 0;
+	      state.targetY = 0;
+	      state.bubble.classList.remove("is-dragging");
+	    });
+	    startTicking();
+	  };
+
+	  bubbles.forEach((bubble) => {
+	    bubble.addEventListener("pointerdown", handlePointerDown);
+	  });
+	  window.addEventListener("pointermove", handlePointerMove);
+	  window.addEventListener("pointerup", finishDrag);
+	  window.addEventListener("pointercancel", finishDrag);
+	  window.addEventListener("blur", releaseAll);
+
+	  worldBubbleInteractionCleanup = () => {
+	    bubbles.forEach((bubble) => {
+	      bubble.removeEventListener("pointerdown", handlePointerDown);
+	      bubble.classList.remove("is-dragging");
+	    });
+	    window.removeEventListener("pointermove", handlePointerMove);
+	    window.removeEventListener("pointerup", finishDrag);
+	    window.removeEventListener("pointercancel", finishDrag);
+	    window.removeEventListener("blur", releaseAll);
+	    if (frame) window.cancelAnimationFrame(frame);
+	    states.forEach((state) => setBubbleInteractionOffset(state.bubble, 0, 0));
+	    activeDrags.clear();
+	    frame = null;
+	  };
+	};
+
 	const initializeWorldBubbleRepel = (cloud, bubbles, reducedMotion) => {
 	  if (reducedMotion || typeof window === "undefined") return;
-	  if (worldRepelCleanup) worldRepelCleanup();
 
 	  const states = bubbles.map((bubble) => ({
 	    bubble,
@@ -429,10 +608,9 @@ const DenverCriticalMass = (() => {
 	  const pointer = { active: false, x: 0, y: 0 };
 	  let frame = null;
 
-	  const isMobile = () => window.matchMedia && window.matchMedia("(max-width: 640px)").matches;
 	  const setTargets = () => {
-	    const radius = isMobile() ? 120 : 170;
-	    const maxPush = isMobile() ? 18 : 28;
+	    const radius = 170;
+	    const maxPush = 28;
 
 	    states.forEach((state) => {
 	      if (!pointer.active) {
@@ -470,8 +648,7 @@ const DenverCriticalMass = (() => {
 	      if (Math.abs(state.x) < 0.03) state.x = 0;
 	      if (Math.abs(state.y) < 0.03) state.y = 0;
 
-	      state.bubble.style.setProperty("--repel-x", `${state.x.toFixed(2)}px`);
-	      state.bubble.style.setProperty("--repel-y", `${state.y.toFixed(2)}px`);
+	      setBubbleInteractionOffset(state.bubble, state.x, state.y);
 
 	      if (
 	        Math.abs(state.x - state.targetX) > 0.08
@@ -511,18 +688,25 @@ const DenverCriticalMass = (() => {
 	  cloud.addEventListener("pointercancel", releasePointer);
 	  window.addEventListener("blur", releasePointer);
 
-	  worldRepelCleanup = () => {
+	  worldBubbleInteractionCleanup = () => {
 	    cloud.removeEventListener("pointermove", handlePointerMove);
 	    cloud.removeEventListener("pointerleave", releasePointer);
 	    cloud.removeEventListener("pointercancel", releasePointer);
 	    window.removeEventListener("blur", releasePointer);
 	    if (frame) window.cancelAnimationFrame(frame);
-	    states.forEach((state) => {
-	      state.bubble.style.setProperty("--repel-x", "0px");
-	      state.bubble.style.setProperty("--repel-y", "0px");
-	    });
+	    states.forEach((state) => setBubbleInteractionOffset(state.bubble, 0, 0));
 	    frame = null;
 	  };
+	};
+
+	const initializeWorldBubbleInteraction = (cloud, bubbles, reducedMotion) => {
+	  resetWorldBubbleInteraction();
+	  if (reducedMotion || typeof window === "undefined") return;
+	  if (isMobileWorldCloud()) {
+	    initializeWorldBubbleDrag(bubbles);
+	    return;
+	  }
+	  initializeWorldBubbleRepel(cloud, bubbles, reducedMotion);
 	};
 
 	const initializeWorldCloud = () => {
@@ -536,6 +720,8 @@ const DenverCriticalMass = (() => {
 	    window.clearInterval(worldCloudTimer);
 	  }
 
+	  worldBubbleTopZIndex = 10;
+	  resetWorldBubbleInteraction();
 	  cloud.replaceChildren();
 
 	  const bubbles = activePositions.map((position, index) => {
@@ -550,7 +736,7 @@ const DenverCriticalMass = (() => {
 	    && window.matchMedia
 	    && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-	  initializeWorldBubbleRepel(cloud, bubbles, reducedMotion);
+	  initializeWorldBubbleInteraction(cloud, bubbles, reducedMotion);
 
 	  if (!reducedMotion && typeof window !== "undefined" && window.setInterval) {
 	    const queue = cityPool
@@ -576,6 +762,7 @@ const DenverCriticalMass = (() => {
 		        );
 
 		        window.setTimeout(() => {
+		          if (bubble.classList.contains("is-dragging")) return;
 		          bubble.classList.add("is-changing");
 	          window.setTimeout(() => {
 	            setBubblePosition(bubble, nextPosition);

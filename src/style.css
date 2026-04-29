@@ -86,8 +86,18 @@ summary {
   white-space: nowrap;
   will-change: opacity, filter, translate;
   pointer-events: none;
+  user-select: none;
   animation: world-bubble-float var(--float-duration, 9s) ease-in-out infinite;
   animation-delay: var(--delay, 0ms);
+}
+
+.world-bubble.is-dragging {
+  z-index: 30;
+  cursor: grabbing;
+  animation-play-state: paused;
+  transition:
+    opacity 1300ms ease,
+    filter 1300ms ease;
 }
 
 .world-bubble[data-size="tiny"] {
@@ -190,13 +200,20 @@ summary {
   }
 
   .world-cloud {
+    width: calc(100% + 1rem);
     min-height: 23.5rem;
+    margin-inline: -0.5rem;
   }
 
   .world-bubble {
     max-width: 10rem;
     padding: 0.48rem 0.62rem;
     font-size: 0.62rem;
+    pointer-events: auto;
+    cursor: grab;
+    touch-action: none;
+    -webkit-user-select: none;
+    user-select: none;
   }
 
   .world-bubble[data-size="tiny"],
