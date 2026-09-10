@@ -22,5 +22,11 @@ window.addEventListener('load', () => {
     day = theDay.getDay();
   }
 
-  console.log('theDay is', theDay)
+  const timeFormat = new Intl.DateTimeFormat("en-US", {
+    timeZone: "America/Denver",
+    timeStyle: "short",
+    dateStyle: "full",
+  });
+
+  nextMass.innerText = timeFormat.format(theDay);
 });

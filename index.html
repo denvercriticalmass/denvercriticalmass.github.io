@@ -11,43 +11,36 @@
     />
     <meta
       http-equiv="Content-Security-Policy"
-      content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; frame-src https://www.google.com; connect-src 'self'; base-uri 'self'; form-action 'self';"
+      content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data: https:; frame-src https://www.google.com; connect-src 'self'; base-uri 'self'; form-action 'self';"
     />
     <meta
       http-equiv="Permissions-Policy"
       content="geolocation=(), microphone=(), camera=(), payment=(), usb=()"
     />
 
-    <style>
-      body {
-        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-      }
-
-      h1, h2, h3 {
-        margin: 0;
-        font-weight: 400;
-      }
-
-      h1, h2 {
-        font-weight: 800;
-        margin-top: 1rem;
-      }
-    </style>
+    <link rel="stylesheet" href="./reset.css" />
+    <link rel="stylesheet" href="./styles.css" />
   </head>
 
   <body>
     <h1>Denver Critical Mass</h1>
 
-    <h2>May through October:</h2>
-    <h3>Meets every last Friday at 6:30pm</h3>
-
-    <h2>November through April:</h2>
-    <h3>Meets every last Sunday at 12:30pm</h3>
+    <h2 id="nextMass"></h2>
 
     <p>In front of West High School near Sunken Gardens Park</p>
 
+    <h3>Summer &amp; Winter hours</h3>
+
+    <dl>
+      <dt>May through October</dt>
+      <dd>Meets every last Friday at 6:30pm</dd>
+
+      <dt>November through April</dt>
+      <dd>Meets every last Sunday at 12:30pm</dd>
+    </dl>
+
     <p>Find more bike rides: <a href="https://events.bike">https://events.bike</a>
 
-    <script src="/main.js"></script>
+    <script src="./main.js"></script>
   </body>
 </html>
