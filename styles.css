@@ -17,6 +17,20 @@ dt {
   font-weight: 800;
 }
 
-p {
+p, ul {
   margin-top: 1rem;
+}
+
+p {
+  max-width: 65ch;
+}
+
+ul li ul {
+  margin-top: 0;
+  font-size: 0.75rem;
+}
+
+ul, li {
+  list-style-type: none;
+  padding: 0;
 }
