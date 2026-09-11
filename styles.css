@@ -36,7 +36,7 @@ ul, li {
 }
 
 @media (width <= 600px) {
-  p {
-    max-width: 85%;
+  p, h2 {
+    max-width: 95%;
   }
 }
