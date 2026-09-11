@@ -34,3 +34,9 @@ ul, li {
   list-style-type: none;
   padding: 0;
 }
+
+@media (width <= 600px) {
+  p {
+    max-width: 95%;
+  }
+}
