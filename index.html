@@ -11,7 +11,7 @@
     />
     <meta
       http-equiv="Content-Security-Policy"
-      content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data: https:; frame-src https://www.google.com; connect-src 'self'; base-uri 'self'; form-action 'self';"
+      content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data: https:; frame-src https://www.google.com https://ridewithgps.com; connect-src 'self'; base-uri 'self'; form-action 'self';"
     />
     <meta
       http-equiv="Permissions-Policy"
@@ -48,6 +48,8 @@
     </ul>
 
     <p>Find more bike rides: <a href="https://events.bike">https://events.bike</a></p>
+
+    <div id="routeEmbed"></div>
 
     <script src="./main.js"></script>
   </body>

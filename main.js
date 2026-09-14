@@ -30,3 +30,22 @@ window.addEventListener('load', () => {
 
   nextMass.innerText = timeFormat.format(theDay);
 });
+
+window.addEventListener('load', () => {
+  const ROUTE_IDS = [
+    49817213, 49817248, 50460495, 50460653, 50460783,
+    50460871, 51439475, 51874739, 51878912, 52804627, 53150117,
+  ];
+
+  const routeId = ROUTE_IDS[Math.floor(Math.random() * ROUTE_IDS.length)];
+
+  const iframe = document.createElement('iframe');
+  iframe.src = `https://ridewithgps.com/embeds?type=route&id=${routeId}`;
+  iframe.style.width = '1px';
+  iframe.style.minWidth = '100%';
+  iframe.style.height = '600px';
+  iframe.style.border = 'none';
+  iframe.scrolling = 'no';
+
+  routeEmbed.appendChild(iframe);
+});

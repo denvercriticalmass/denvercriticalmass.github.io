@@ -35,8 +35,13 @@ ul, li {
   padding: 0;
 }
 
+#routeEmbed {
+  max-width: 600px;
+}
+
 @media (width <= 600px) {
   p, h2 {
     max-width: 90%;
   }
 }
+
