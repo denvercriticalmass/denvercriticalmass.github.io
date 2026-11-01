@@ -8,8 +8,12 @@ h1, h2, h3 {
   margin-top: 1rem;
 }
 
-h3 {
+h2 {
   font-size: 1.4rem;
+}
+
+h3 {
+  font-size: 1.2rem;
 }
 
 dt {
@@ -42,6 +46,14 @@ ul, li {
 @media (width <= 600px) {
   p, h2 {
     max-width: 90%;
+  }
+
+  h2 {
+    font-size: 1.2rem;
+  }
+
+  h3 {
+    font-size: 1rem;
   }
 }
 
