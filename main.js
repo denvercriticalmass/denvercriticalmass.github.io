@@ -1,51 +1,42 @@
 window.addEventListener('load', () => {
-  const WINTER_DAY = 0;
-  const SUMMER_DAY = 5;
-
-  const SUMMER_START = 18;
-  const WINTER_START = 12;
-
   const now = new Date();
-
   const today = now.getDay();
   const month = now.getMonth();
-  const year = now.getFullYear() ;
+  const year = now.getFullYear();
+
+  const is_winter = month >= 10 || month <= 3;
+  const ride_day = is_winter ? 0 : 5;
+  const start_hour = is_winter ? 12 : 18;
 
   const nextMonth = month == 11 ? 1 : month + 1;
   const nextYear = month == 11 ? year + 1 : year;
 
-  let theDay = new Date(nextYear, nextMonth, 0, SUMMER_START, 30); // start from the end of the month
-  let day = theDay.getDay();
+  let theMeet = new Date(nextYear, nextMonth, 0, start_hour, 30); // start from the end of the month
+  let day = theMeet.getDay();
 
-  while(day !== SUMMER_DAY) {
-    theDay = new Date(theDay - (1000 * 60 * 60 * 24))
-    day = theDay.getDay();
+  while(day !== ride_day) {
+    theMeet = new Date(theMeet - (1000 * 60 * 60 * 24))
+    day = theMeet.getDay();
   }
 
-  const timeFormat = new Intl.DateTimeFormat("en-US", {
+  const rideDayFormat = new Intl.DateTimeFormat("en-US", {
     timeZone: "America/Denver",
-    timeStyle: "short",
     dateStyle: "full",
   });
 
-  nextMass.innerText = timeFormat.format(theDay);
-});
+  const meetFormat = new Intl.DateTimeFormat("en-US", {
+    timeZone: "America/Denver",
+    timeStyle: "short",
+  });
 
-window.addEventListener('load', () => {
-  const ROUTE_IDS = [
-    49817213, 49817248, 50460495, 50460653, 50460783,
-    50460871, 51439475, 51874739, 51878912, 52804627, 53150117,
-  ];
+  const theRide = new Date(theMeet.getTime() + 1000 * 60 * 30);
 
-  const routeId = ROUTE_IDS[Math.floor(Math.random() * ROUTE_IDS.length)];
+  const rideFormat = new Intl.DateTimeFormat("en-US", {
+    timeZone: "America/Denver",
+    timeStyle: "short",
+  });
 
-  const iframe = document.createElement('iframe');
-  iframe.src = `https://ridewithgps.com/embeds?type=route&id=${routeId}`;
-  iframe.style.width = '1px';
-  iframe.style.minWidth = '100%';
-  iframe.style.height = '600px';
-  iframe.style.border = 'none';
-  iframe.scrolling = 'no';
-
-  routeEmbed.appendChild(iframe);
+  nextRideDay.innerText = rideDayFormat.format(theMeet);
+  nextRideMeet.innerText = meetFormat.format(theMeet);
+  nextRideGo.innerText = rideFormat.format(theRide);
 });
