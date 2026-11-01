@@ -15,7 +15,7 @@ window.addEventListener('load', () => {
   let day = theMeet.getDay();
 
   while(day !== ride_day) {
-    theMeet = new Date(theMeet - (1000 * 60 * 60 * 24))
+    theMeet = new Date(theMeet.getTime() - (1000 * 60 * 60 * 24))
     day = theMeet.getDay();
   }
 
@@ -29,7 +29,7 @@ window.addEventListener('load', () => {
     timeStyle: "short",
   });
 
-  const theRide = new Date(theMeet.getTime() + 1000 * 60 * 30);
+  const theRide = new Date(theMeet.getTime() + (1000 * 60 * 30));
 
   const rideFormat = new Intl.DateTimeFormat("en-US", {
     timeZone: "America/Denver",
